@@ -10,7 +10,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
         
         :root {
-            --bg-dark: #050505;
+            --bg-dark: #030712;
             --accent-blue: #3b82f6;
         }
 
@@ -28,42 +28,40 @@
             left: 50%;
             transform: translateX(-50%);
             width: 100vw;
-            height: 60vh;
-            background: radial-gradient(circle at 50% 0%, rgba(30, 41, 59, 0.5) 0%, transparent 70%);
+            height: 80vh;
+            background: radial-gradient(circle at 50% 0%, rgba(30, 58, 138, 0.3) 0%, transparent 70%);
             z-index: -1;
             pointer-events: none;
-            will-change: transform;
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 24px;
-            transition: transform 0.4s cubic-bezier(0.2, 0, 0.2, 1), background 0.3s ease;
-            transform: translateZ(0);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 28px;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         .glass-card:hover {
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateY(-5px) translateZ(0);
-            border-color: rgba(59, 130, 246, 0.3);
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-10px);
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(59, 130, 246, 0.1);
         }
 
         .header-text {
-            background: linear-gradient(180deg, #ffffff 40%, #94a3b8 100%);
+            background: linear-gradient(180deg, #ffffff 30%, #4b5563 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-size: clamp(1.7rem, 9vw, 4.5rem);
-            white-space: nowrap;
-            line-height: 1.1;
+            font-size: clamp(2rem, 10vw, 5rem);
+            line-height: 1;
         }
 
         .reveal {
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.7s ease-out;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
         }
 
         .reveal.active {
@@ -71,16 +69,29 @@
             transform: translateY(0);
         }
 
+        .btn-preview {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #9ca3af;
+            transition: all 0.3s ease;
+        }
+
+        .btn-preview:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
         .music-pill {
             position: fixed;
-            bottom: 25px;
-            right: 25px;
+            bottom: 30px;
+            right: 30px;
             z-index: 9999;
         }
 
         .play-circle {
-            width: 50px;
-            height: 50px;
+            width: 55px;
+            height: 55px;
             background: #fff;
             color: #000;
             border-radius: 50%;
@@ -88,81 +99,93 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-            transition: 0.3s;
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .play-circle:active { transform: scale(0.85); }
+        .play-circle:hover { transform: scale(1.1); }
+        .play-circle:active { transform: scale(0.9); }
 
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #333; }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #030712; }
+        ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 10px; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center p-6">
     <div class="bg-glow"></div>
 
-    <header class="text-center mb-16 mt-16 w-full px-4 reveal flex flex-col items-center">
-        <h1 class="font-extrabold tracking-tighter header-text mb-4">
+    <header class="text-center mb-20 mt-20 w-full px-4 reveal flex flex-col items-center">
+        <h1 class="font-extrabold tracking-tighter header-text mb-6 uppercase">
             HM MODZ TEAM
         </h1>
-        <div class="inline-block px-5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-[10px] tracking-[0.4em] uppercase text-blue-400 font-bold">
-            Software Developer & Malware Developer
+        <div class="inline-flex items-center px-6 py-2 rounded-full bg-blue-500/5 border border-blue-500/20 text-[10px] tracking-[0.5em] uppercase text-blue-400 font-bold shadow-[0_0_15px_rgba(59,130,246,0.1)]">
+            <span class="w-1.5 h-1.5 bg-blue-400 rounded-full mr-3 animate-pulse"></span>
+            Software & Malware Developer
         </div>
     </header>
 
-    <main class="max-w-4xl w-full space-y-10">
-        <section class="glass-card p-10 flex flex-col items-center text-center reveal">
-            <div class="relative mb-8">
-                <div class="absolute inset-0 bg-blue-600 blur-[60px] opacity-20 rounded-full"></div>
+    <main class="max-w-4xl w-full space-y-12">
+        <section class="glass-card p-12 flex flex-col items-center text-center reveal">
+            <div class="relative mb-10 group">
+                <div class="absolute inset-0 bg-blue-500 blur-[80px] opacity-20 rounded-full group-hover:opacity-40 transition-opacity"></div>
                 <img src="https://files.catbox.moe/4y3suf.png" alt="Profile" 
-                     class="relative w-36 h-36 rounded-full object-cover border-4 border-white/5 p-1 shadow-2xl">
+                     class="relative w-40 h-40 rounded-full object-cover border-[6px] border-white/5 p-1.5 shadow-2xl transition-transform duration-500 group-hover:scale-105">
             </div>
-            <h2 class="text-3xl font-bold tracking-tight mb-2">Muhammad Raihan Musalah</h2>
-            <p class="text-blue-500 text-xs mb-6 uppercase tracking-[0.3em] font-semibold">Owner Of HM MODZ TEAM</p>
-            <p class="text-gray-400 text-sm leading-relaxed max-w-md mx-auto">
-                Berfokus Pada Pengembangan Aplikasi Yang Optimal Dan Website Yang Lebih Modern.
+            <h2 class="text-4xl font-bold tracking-tight mb-3">Muhammad Raihan Musalah</h2>
+            <p class="text-blue-500 text-sm mb-8 uppercase tracking-[0.4em] font-bold opacity-80">Owner Of HM MODZ TEAM</p>
+            <p class="text-gray-400 text-base leading-relaxed max-w-lg mx-auto font-light">
+                Berfokus pada pengembangan aplikasi yang <span class="text-white font-medium">optimal</span> dan pengalaman aplikasi streaming yang lebih <span class="text-white font-medium">modern</span>.
             </p>
         </section>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div class="glass-card p-8 group flex flex-col justify-between reveal">
                 <div>
-                    <div class="flex justify-between items-center mb-8">
-                        <div class="w-12 h-12 bg-blue-500/10 rounded-2xl flex items-center justify-center">
-                            <i class="fas fa-play text-blue-500 text-xl"></i>
+                    <div class="flex justify-between items-center mb-10">
+                        <div class="w-14 h-14 bg-blue-600/10 rounded-2xl flex items-center justify-center border border-blue-500/20">
+                            <i class="fas fa-play text-blue-500 text-2xl"></i>
                         </div>
-                        <span class="text-[10px] font-bold text-blue-400 tracking-widest bg-blue-500/10 px-3 py-1 rounded-md border border-blue-500/20">V7.1</span>
+                        <span class="text-[10px] font-black text-blue-400 tracking-[0.2em] bg-blue-500/10 px-4 py-1.5 rounded-lg border border-blue-500/20">V7.5</span>
                     </div>
-                    <h3 class="text-2xl font-bold mb-3 italic">HM MODZ STREAM</h3>
-                    <p class="text-gray-400 text-sm mb-10 leading-relaxed">Nonton Anime, Donghua, Film, Manhwa favorit, Aplikasi Sudah Dioptimalkan.</p>
+                    <h3 class="text-3xl font-bold mb-4 italic tracking-tight">HM MODZ STREAM</h3>
+                    <p class="text-gray-400 text-sm mb-10 leading-relaxed font-light">Nonton Anime, Donghua, Film, Manhwa favorit. Aplikasi ringan dengan performa tinggi.</p>
                 </div>
-                <button onclick="redirectTo('stream')" class="w-full py-4 bg-white text-black font-bold rounded-xl hover:bg-blue-600 hover:text-white transition-all duration-300 uppercase text-[11px] tracking-widest">
-                    Download APK
-                </button>
+                <div class="space-y-3">
+                    <button onclick="redirectTo('stream')" class="w-full py-4 bg-white text-black font-bold rounded-2xl hover:bg-blue-600 hover:text-white transition-all duration-500 uppercase text-[11px] tracking-[0.2em] shadow-lg shadow-white/5">
+                        Download APK
+                    </button>
+                    <button onclick="previewApp('stream')" class="btn-preview w-full py-3 rounded-2xl font-semibold text-[10px] uppercase tracking-[0.2em]">
+                        <i class="fas fa-eye mr-2"></i> Preview App
+                    </button>
+                </div>
             </div>
 
             <div class="glass-card p-8 group flex flex-col justify-between reveal">
                 <div>
-                    <div class="flex justify-between items-center mb-8">
-                        <div class="w-12 h-12 bg-red-500/10 rounded-2xl flex items-center justify-center">
-                            <i class="fab fa-youtube text-red-500 text-xl"></i>
+                    <div class="flex justify-between items-center mb-10">
+                        <div class="w-14 h-14 bg-red-600/10 rounded-2xl flex items-center justify-center border border-red-500/20">
+                            <i class="fab fa-youtube text-red-500 text-2xl"></i>
                         </div>
-                        <span class="text-[10px] font-bold text-red-400 tracking-widest bg-red-500/10 px-3 py-1 rounded-md border border-red-500/20">Beta Project</span>
+                        <span class="text-[10px] font-black text-red-400 tracking-[0.2em] bg-red-500/10 px-4 py-1.5 rounded-lg border border-red-500/20">BETA</span>
                     </div>
-                    <h3 class="text-2xl font-bold mb-3 italic">HM TUBE</h3>
-                    <p class="text-gray-400 text-sm mb-10 leading-relaxed">Clone YouTube Dengan Berbagai Keunggulan</p>
+                    <h3 class="text-3xl font-bold mb-4 italic tracking-tight">HM TUBE</h3>
+                    <p class="text-gray-400 text-sm mb-10 leading-relaxed font-light">Eksplorasi konten video dengan fitur premium yang sudah dioptimalkan.</p>
                 </div>
-                <button onclick="redirectTo('tube')" class="w-full py-4 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition-all duration-300 uppercase text-[11px] tracking-widest">
-                    Download APK
-                </button>
+                <div class="space-y-3">
+                    <button onclick="redirectTo('tube')" class="w-full py-4 bg-red-600 text-white font-bold rounded-2xl hover:bg-red-700 transition-all duration-500 uppercase text-[11px] tracking-[0.2em] shadow-lg shadow-red-600/20">
+                        Download APK
+                    </button>
+                    <button onclick="previewApp('tube')" class="btn-preview w-full py-3 rounded-2xl font-semibold text-[10px] uppercase tracking-[0.2em]">
+                        <i class="fas fa-eye mr-2"></i> Preview App
+                    </button>
+                </div>
             </div>
         </div>
     </main>
 
-    <footer class="mt-40 text-gray-700 text-[10px] tracking-[0.5em] uppercase pb-20 text-center">
-        &copy; 2026 HM MODZ PROJECT <br> <span class="text-[8px] opacity-50 mt-2 block italic">Engineered for Performance</span>
+    <footer class="mt-48 text-gray-600 text-[10px] tracking-[0.6em] uppercase pb-20 text-center">
+        &copy; 2026 HM MODZ PROJECT <br> 
+        <span class="text-[9px] text-blue-500/50 mt-4 block font-bold">Stay Modern • Stay Optimal</span>
     </footer>
 
     <div class="music-pill">
@@ -183,6 +206,14 @@
             window.location.href = links[type];
         }
 
+        function previewApp(type) {
+            const previewLinks = {
+                'stream': 'https://vt.tiktok.com/ZS9eRevfk/', 
+                'tube': 'https://t.me/hmmodzch'
+            };
+            window.location.href = previewLinks[type];
+        }
+
         const audio = document.getElementById("myAudio");
         const icon = document.getElementById("music-icon");
 
@@ -201,7 +232,7 @@
             for (var i = 0; i < reveals.length; i++) {
                 var windowHeight = window.innerHeight;
                 var elementTop = reveals[i].getBoundingClientRect().top;
-                var elementVisible = 100;
+                var elementVisible = 80;
                 if (elementTop < windowHeight - elementVisible) {
                     reveals[i].classList.add("active");
                 }
