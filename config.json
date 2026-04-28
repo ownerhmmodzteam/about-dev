@@ -1,8 +1,8 @@
 {
-  "versionCode": 2,
-  "versionName": "1.0.1",
-  "downloadUrl": "https://github.com/username/repo/releases/download/v1.0.1/app.apk",
+  "versionCode": 7,
+  "versionName": "7.9",
+  "downloadUrl": "https://about-hmmodzteam.netlify.app",
   "message": "Update HM STREAM ke versi terbaru untuk fitur Anti-Iklan yang lebih stabil!",
-  "isMaintenance": false,
+  "isMaintenance": true,
   "forceUpdate": true
 }
