@@ -2,230 +2,279 @@
 <html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HM MODZ PROJECT | Official</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HM MODZ TEAM | Developer Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@500&display=swap');
         
         :root {
-            --bg-dark: #020617;
-            --accent-blue: #3b82f6;
-            --glass: rgba(255, 255, 255, 0.02);
-            --glass-border: rgba(255, 255, 255, 0.05);
+            --glass: rgba(15, 15, 20, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
-        body {
-            background: var(--bg-dark);
+        html, body {
+            background-color: #050505;
             color: #ffffff;
             font-family: 'Plus Jakarta Sans', sans-serif;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            touch-action: pan-y;
+        }
+
+        a, button, .click-anim {
+            touch-action: manipulation;
+        }
+
+        body.loading {
+            overflow: hidden;
+        }
+
+        #loader {
+            position: fixed;
+            inset: 0;
+            background-color: #050505;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        #loader.hidden {
+            opacity: 0;
+            transform: scale(1.1);
+            pointer-events: none;
+        }
+
+        .typing-container {
+            font-family: 'Fira Code', monospace;
+            font-size: clamp(1rem, 4vw, 2rem);
+            font-weight: 500;
+            color: #3b82f6;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2em;
+            background-color: #3b82f6;
+            vertical-align: middle;
+            margin-left: 5px;
+            animation: blink 0.8s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
 
         .bg-glow {
             position: fixed;
-            top: -30%;
+            top: 20%;
             left: 50%;
             transform: translateX(-50%);
-            width: 150vw;
-            height: 120vh;
-            background: radial-gradient(circle at 50% 0%, rgba(30, 58, 138, 0.25) 0%, transparent 60%);
-            z-index: -1;
+            width: 80vw;
+            height: 80vh;
+            background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.15), transparent 60%);
+            z-index: 20;
             pointer-events: none;
+            animation: pulse-glow 8s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            0% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1.1); }
         }
 
         .glass-card {
             background: var(--glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             border: 1px solid var(--glass-border);
-            border-radius: 28px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            border-radius: 20px;
+            transition: all 0.4s ease;
         }
 
         .glass-card:hover {
-            background: rgba(255, 255, 255, 0.04);
-            transform: translateY(-8px);
-            border-color: rgba(59, 130, 246, 0.3);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(59, 130, 246, 0.1);
+            background: rgba(30, 30, 40, 0.65);
+            border-color: rgba(59, 130, 246, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
         }
 
-        .header-text {
-            background: linear-gradient(180deg, #ffffff 30%, rgba(255, 255, 255, 0.2) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: clamp(2.5rem, 8vw, 4.5rem);
-            line-height: 1.1;
-            letter-spacing: -0.02em;
+        .tab-content {
+            display: none;
+            animation: fadeUp 0.5s ease-out forwards;
         }
 
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px) scale(0.98);
-            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), 
-                        transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-            will-change: opacity, transform;
+        .tab-content.active {
+            display: block;
         }
 
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        .btn-action {
-            transition: all 0.3s ease;
-        }
-
-        .btn-action:hover {
-            box-shadow: 0 10px 20px -10px currentColor;
-            transform: translateY(-2px);
-        }
-
-        .btn-preview {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: #9ca3af;
-            transition: all 0.3s ease;
-        }
-
-        .btn-preview:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.2);
-            color: #fff;
-        }
-
-        .play-circle {
-            width: 56px;
-            height: 56px;
-            background: rgba(255, 255, 255, 0.9);
-            color: #020617;
-            border-radius: 50%;
+        #home.active {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        .play-circle:hover {
-            transform: scale(1.1);
-            background: #ffffff;
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        .click-anim {
+            transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .click-anim:active {
+            transform: scale(0.92) !important;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050505; }
         ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #334155; }
+        ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center p-6 pb-20 selection:bg-blue-500/30 selection:text-white">
+<body class="loading min-h-screen flex flex-col items-center selection:bg-blue-500/30 selection:text-white">
+
+    <div id="loader">
+        <div class="typing-container">
+            <span class="text-gray-400 mr-2">></span><span id="typed-text" class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300 shadow-blue-500 drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]"></span><span class="cursor"></span>
+        </div>
+    </div>
+
+    <video autoplay loop muted playsinline class="fixed top-0 left-0 w-screen h-screen object-cover z-0 pointer-events-none">
+        <source src="latar.webm" type="video/webm">
+    </video>
+    <div class="fixed top-0 left-0 w-screen h-screen bg-black/50 z-10 pointer-events-none"></div>
+
     <div class="bg-glow"></div>
 
-    <header class="text-center mb-24 mt-20 w-full px-4 reveal flex flex-col items-center">
-        <h1 class="font-extrabold tracking-tighter header-text mb-5 uppercase">
-            HM MODZ TEAM
-        </h1>
-        <div class="inline-flex items-center px-5 py-2 rounded-full bg-blue-500/5 border border-blue-500/20 text-[10px] tracking-[0.3em] uppercase text-blue-400 font-semibold backdrop-blur-md shadow-[0_0_15px_rgba(59,130,246,0.1)]">
-            <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-3 animate-ping"></span>
-            Software & Malware Developer
-        </div>
-    </header>
+    <nav class="fixed top-6 z-40 glass-card px-2 py-2 rounded-full flex gap-2">
+        <button onclick="openTab('home')" id="btn-home" class="tab-btn click-anim px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 bg-blue-500/20 text-blue-400">Home</button>
+        <button onclick="openTab('projects')" id="btn-projects" class="tab-btn click-anim px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 text-gray-400 hover:text-white">Projects</button>
+        <button onclick="openTab('tech')" id="btn-tech" class="tab-btn click-anim px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 text-gray-400 hover:text-white">Tech Stack</button>
+    </nav>
 
-    <main class="max-w-6xl w-full space-y-10">
-        <section class="glass-card p-10 md:p-14 flex flex-col items-center text-center reveal" style="transition-delay: 100ms;">
-            <div class="relative mb-8 group">
-                <div class="absolute inset-0 bg-blue-500 blur-[50px] opacity-20 rounded-full transition-opacity duration-500 group-hover:opacity-40"></div>
-                <img src="https://files.catbox.moe/4y3suf.png" alt="Profile" 
-                     class="relative w-32 h-32 md:w-36 md:h-36 rounded-full object-cover border-[3px] border-white/5 p-1 shadow-2xl transition-transform duration-500 group-hover:scale-105">
+    <main class="relative z-30 max-w-5xl w-full px-6 pt-28 pb-20">
+        
+        <section id="home" class="tab-content active flex-col items-center text-center">
+            <div class="relative mb-8 group inline-block click-anim">
+                <div class="absolute inset-0 bg-blue-500 blur-[40px] opacity-30 rounded-full transition-opacity duration-500 group-hover:opacity-60"></div>
+                <img src="https://files.catbox.moe/4y3suf.png" alt="Profile" class="relative w-36 h-36 rounded-full object-cover border-[2px] border-blue-500/30 p-1 shadow-2xl">
             </div>
-            <h2 class="text-2xl md:text-4xl font-bold tracking-tight mb-2">Muhammad Raihan Musalah</h2>
-            <p class="text-blue-400 text-[10px] md:text-xs mb-8 uppercase tracking-[0.4em] font-bold opacity-90">Owner Of HM MODZ TEAM</p>
-            <p class="text-gray-400 text-sm md:text-base leading-relaxed max-w-xl mx-auto font-light">
-                Berfokus pada pengembangan aplikasi yang <span class="text-white font-medium">optimal</span> dan pengalaman aplikasi streaming yang lebih <span class="text-white font-medium">modern</span>.
+            
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">
+                Muhammad Raihan
+            </h1>
+            
+            <div class="inline-flex items-center px-4 py-1.5 rounded-md bg-blue-500/10 border border-blue-500/20 text-xs tracking-[0.2em] uppercase text-blue-400 font-bold mb-8">
+                <i class="fas fa-code mr-2"></i> Software Developer
+            </div>
+            
+            <p class="text-gray-300 text-base md:text-lg leading-relaxed max-w-2xl mx-auto font-light drop-shadow-md">
+                Owner of <span class="text-white font-semibold">HM MODZ TEAM</span>. Berfokus pada pengembangan aplikasi optimal, dan selalu membuat orang bahagia tanpa memandang status sosial.
             </p>
+
+            <div class="mt-10 flex gap-4 justify-center">
+                <button onclick="openTab('projects')" class="click-anim px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)]">
+                    Lihat Portofolio
+                </button>
+                <a href="https://t.me/hmmodzch" target="_blank" class="click-anim px-8 py-3 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold rounded-xl transition-all backdrop-blur-md">
+                    Join Komunitas
+                </a>
+            </div>
         </section>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            <div class="glass-card p-8 group flex flex-col justify-between reveal" style="transition-delay: 200ms;">
-                <div>
-                    <div class="flex justify-between items-center mb-8">
-                        <div class="w-12 h-12 bg-gradient-to-br from-blue-600/20 to-blue-500/5 rounded-2xl flex items-center justify-center border border-blue-500/20 shadow-inner">
-                            <i class="fas fa-play text-blue-500 text-xl"></i>
-                        </div>
-                        <span class="text-[9px] font-bold text-blue-400 tracking-widest bg-blue-500/10 px-3 py-1.5 rounded-lg uppercase">V14.0_Optimal</span>
-                    </div>
-                    <h3 class="text-xl md:text-2xl font-bold mb-3 tracking-tight">HM STREAM</h3>
-                    <p class="text-gray-400 text-xs md:text-sm mb-10 leading-relaxed font-light">Nonton Anime, Donghua, dan Film favoritmu tanpa gangguan iklan dan tanpa membayar untuk premium.</p>
-                </div>
-                <div class="space-y-3">
-                    <button onclick="redirectTo('stream')" class="btn-action w-full py-3.5 bg-white text-black font-bold rounded-xl hover:bg-blue-500 hover:text-white transition-all duration-300 uppercase text-[10px] tracking-widest">
-                        Download APK
-                    </button>
-                    <button onclick="previewApp('stream')" class="btn-preview w-full py-3.5 rounded-xl text-[10px] uppercase tracking-widest font-medium">
-                        <i class="fas fa-eye mr-2"></i> Preview
-                    </button>
-                </div>
+        <section id="projects" class="tab-content">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-2 drop-shadow-lg">Featured Projects</h2>
+                <p class="text-gray-300 text-sm drop-shadow-md">Aplikasi unggulan yang dikembangkan oleh HM MODZ TEAM.</p>
             </div>
 
-            <div class="glass-card p-8 group flex flex-col justify-between reveal" style="transition-delay: 300ms;">
-                <div>
-                    <div class="flex justify-between items-center mb-8">
-                        <div class="w-12 h-12 bg-gradient-to-br from-red-600/20 to-red-500/5 rounded-2xl flex items-center justify-center border border-red-500/20 shadow-inner">
-                            <i class="fab fa-youtube text-red-500 text-xl"></i>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="glass-card p-8 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="w-14 h-14 bg-blue-500/20 rounded-2xl flex items-center justify-center border border-blue-500/30 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+                                <i class="fas fa-play text-blue-400 text-2xl"></i>
+                            </div>
+                            <span class="text-[10px] font-bold text-green-300 bg-green-500/20 px-3 py-1 rounded-full uppercase tracking-wider border border-green-500/20">v14.0 Live</span>
                         </div>
-                        <span class="text-[9px] font-bold text-red-400 tracking-widest bg-red-500/10 px-3 py-1.5 rounded-lg uppercase">BETA</span>
+                        <h3 class="text-2xl font-bold mb-3">HM STREAM</h3>
+                        <p class="text-gray-300 text-sm mb-6 leading-relaxed">Platform streaming Anime & Film bebas iklan. Dioptimalkan dengan server bypass untuk pengalaman nonton premium gratis.</p>
                     </div>
-                    <h3 class="text-xl md:text-2xl font-bold mb-3 tracking-tight">HM TUBE</h3>
-                    <p class="text-gray-400 text-xs md:text-sm mb-10 leading-relaxed font-light">Eksplorasi konten video YouTube dengan fitur premium yang dioptimalkan sepenuhnya.</p>
+                    <div class="flex gap-3 mt-4">
+                        <a href="https://www.mediafire.com/file/oqnn4cdpjft1gax/hmmodz+stream+v14.apk/file" target="_blank" class="click-anim flex-1 py-3 text-center bg-white/90 text-black font-bold rounded-xl hover:bg-blue-500 hover:text-white transition-all text-xs uppercase tracking-wider shadow-lg">
+                            Download APK
+                        </a>
+                        <a href="https://vt.tiktok.com/ZSQ32sVw9/" target="_blank" class="click-anim px-5 py-3 flex items-center justify-center bg-white/10 border border-white/20 rounded-xl hover:bg-white/20 transition-all text-white shadow-lg">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="space-y-3">
-                    <button onclick="redirectTo('tube')" class="btn-action w-full py-3.5 bg-red-600 text-white font-bold rounded-xl hover:bg-red-500 transition-all duration-300 uppercase text-[10px] tracking-widest">
-                        Download APK
-                    </button>
-                    <button onclick="previewApp('tube')" class="btn-preview w-full py-3.5 rounded-xl text-[10px] uppercase tracking-widest font-medium">
-                        <i class="fas fa-eye mr-2"></i> Preview
-                    </button>
+
+                <div class="glass-card p-8 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="w-14 h-14 bg-red-500/20 rounded-2xl flex items-center justify-center border border-red-500/30 shadow-[0_0_15px_rgba(239,68,68,0.2)]">
+                                <i class="fab fa-youtube text-red-400 text-2xl"></i>
+                            </div>
+                            <span class="text-[10px] font-bold text-red-300 bg-red-500/20 px-3 py-1 rounded-full uppercase tracking-wider border border-red-500/20">Closed/Offline</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">HM TUBE</h3>
+                        <p class="text-gray-300 text-sm mb-6 leading-relaxed">Modifikasi klien YouTube dengan fiture premium dan memiliki hak acces mengambil database youtube.</p>
+                    </div>
+                    <div class="flex gap-3 mt-4">
+                        <a href="https://www.mediafire.com/file/88xxt1p5uxm57iz/HM+TUBE_1.5.apk/file" target="_blank" class="click-anim flex-1 py-3 text-center bg-white/90 text-black font-bold rounded-xl hover:bg-red-500 hover:text-white transition-all text-xs uppercase tracking-wider shadow-lg">
+                            Download APK
+                        </a>
+                        <a href="https://t.me/hmmodzch" target="_blank" class="click-anim px-5 py-3 flex items-center justify-center bg-white/10 border border-white/20 rounded-xl hover:bg-white/20 transition-all text-white shadow-lg">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div class="glass-card p-8 group flex flex-col justify-between reveal" style="transition-delay: 400ms;">
-                <div>
-                    <div class="flex justify-between items-center mb-8">
-                        <div class="w-12 h-12 bg-gradient-to-br from-emerald-600/20 to-emerald-500/5 rounded-2xl flex items-center justify-center border border-emerald-500/20 shadow-inner">
-                            <i class="fas fa-globe text-emerald-500 text-xl"></i>
-                        </div>
-                        <span class="text-[9px] font-bold text-emerald-400 tracking-widest bg-emerald-500/10 px-3 py-1.5 rounded-lg uppercase">Online</span>
-                    </div>
-                    <h3 class="text-xl md:text-2xl font-bold mb-3 tracking-tight">HM WEB</h3>
-                    <p class="text-gray-400 text-xs md:text-sm mb-10 leading-relaxed font-light">Kunjungi portal utama kami untuk informasi proyek, komunitas, dan update terbaru.</p>
-                </div>
-                <div class="space-y-3">
-                    <button onclick="redirectTo('web')" class="btn-action w-full py-3.5 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-500 transition-all duration-300 uppercase text-[10px] tracking-widest">
-                        Visit Website
-                    </button>
-                    <button onclick="previewApp('web')" class="btn-preview w-full py-3.5 rounded-xl text-[10px] uppercase tracking-widest font-medium">
-                        <i class="fas fa-link mr-2"></i> Quick Link
-                    </button>
-                </div>
+        <section id="tech" class="tab-content">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-2 drop-shadow-lg">My Arsenal</h2>
+                <p class="text-gray-300 text-sm drop-shadow-md">Teknologi dan tools yang digunakan di balik layar HM MODZ.</p>
             </div>
 
-        </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="glass-card click-anim p-6 flex flex-col items-center justify-center text-center group cursor-default">
+                    <i class="fab fa-android text-4xl text-green-400 mb-4 group-hover:scale-110 transition-transform drop-shadow-[0_0_8px_rgba(74,222,128,0.5)]"></i>
+                    <h4 class="font-bold">Android Dev</h4>
+                    <p class="text-xs text-gray-300 mt-1">Java / Kotlin</p>
+                </div>
+                <div class="glass-card click-anim p-6 flex flex-col items-center justify-center text-center group cursor-default">
+                    <i class="fas fa-bug text-4xl text-blue-400 mb-4 group-hover:scale-110 transition-transform drop-shadow-[0_0_8px_rgba(96,165,250,0.5)]"></i>
+                    <h4 class="font-bold">Reverse Eng.</h4>
+                    <p class="text-xs text-gray-300 mt-1">Frida, Linux Tools</p>
+                </div>
+                <div class="glass-card click-anim p-6 flex flex-col items-center justify-center text-center group cursor-default">
+                    <i class="fab fa-python text-4xl text-yellow-400 mb-4 group-hover:scale-110 transition-transform drop-shadow-[0_0_8px_rgba(250,204,21,0.5)]"></i>
+                    <h4 class="font-bold">Python</h4>
+                    <p class="text-xs text-gray-300 mt-1">Scripts/Tools</p>
+                </div>
+                <div class="glass-card click-anim p-6 flex flex-col items-center justify-center text-center group cursor-default">
+                    <i class="fas fa-server text-4xl text-purple-400 mb-4 group-hover:scale-110 transition-transform drop-shadow-[0_0_8px_rgba(192,132,252,0.5)]"></i>
+                    <h4 class="font-bold">API / Backend</h4>
+                    <p class="text-xs text-gray-300 mt-1">Node.js / PHP</p>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <footer class="mt-32 text-gray-500 text-[9px] tracking-[0.4em] uppercase text-center reveal" style="transition-delay: 500ms;">
-        &copy; 2026 HM MODZ PROJECT <br> 
-        <span class="text-blue-500/50 mt-3 block font-bold tracking-[0.5em]">Stay Calm • Stay Optimal</span>
-    </footer>
-
     <div class="fixed bottom-6 right-6 z-50">
-        <div class="play-circle" onclick="toggleMusic()">
-            <i id="music-icon" class="fas fa-play text-sm ml-0.5"></i>
+        <div class="click-anim w-14 h-14 bg-white/10 backdrop-blur-lg border border-white/20 text-white rounded-full flex items-center justify-center cursor-pointer hover:bg-white hover:text-black transition-all shadow-[0_0_20px_rgba(0,0,0,0.5)]" onclick="toggleMusic()">
+            <i id="music-icon" class="fas fa-play text-base"></i>
         </div>
         <audio id="myAudio" loop>
             <source src="sta.mp3" type="audio/mpeg">
@@ -233,22 +282,54 @@
     </div>
 
     <script>
-        function redirectTo(type) {
-            const links = {
-                'stream': 'https://www.mediafire.com/file/oqnn4cdpjft1gax/hmmodz+stream+v14.apk/file',
-                'tube': 'https://www.mediafire.com/file/88xxt1p5uxm57iz/HM+TUBE_1.5.apk/file',
-                'web': 'https://anime-project-chi.vercel.app/'
-            };
-            window.location.href = links[type];
-        }
+        document.addEventListener("DOMContentLoaded", () => {
+            const textToType = "Welcome To HM MODZ PROJECT";
+            const typedTextElement = document.getElementById("typed-text");
+            const loader = document.getElementById("loader");
+            let index = 0;
 
-        function previewApp(type) {
-            const previewLinks = {
-                'stream': 'https://vt.tiktok.com/ZSQXUeU9R/', 
-                'tube': 'https://t.me/hmmodzch',
-                'web': 'https://t.me/hmmodzch' 
-            };
-            window.location.href = previewLinks[type];
+            function typeText() {
+                if (index < textToType.length) {
+                    typedTextElement.textContent += textToType.charAt(index);
+                    index++;
+                    const typingSpeed = Math.floor(Math.random() * (120 - 60 + 1)) + 60; 
+                    setTimeout(typeText, typingSpeed);
+                } else {
+                    setTimeout(() => {
+                        loader.classList.add("hidden");
+                        document.body.classList.remove("loading");
+                        
+                        setTimeout(() => {
+                            loader.remove();
+                        }, 800); 
+                    }, 1000); 
+                }
+            }
+
+            setTimeout(typeText, 500);
+        });
+
+        function openTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+                tab.style.animation = 'none';
+                tab.offsetHeight; 
+            });
+
+            const btns = document.querySelectorAll('.tab-btn');
+            btns.forEach(btn => {
+                btn.className = "tab-btn click-anim px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 text-gray-400 hover:text-white";
+            });
+
+            const activeTab = document.getElementById(tabName);
+            activeTab.classList.add('active');
+            activeTab.style.animation = 'fadeUp 0.5s ease-out forwards';
+            
+            const activeBtn = document.getElementById('btn-' + tabName);
+            activeBtn.className = "tab-btn click-anim px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 bg-blue-500/20 text-blue-400";
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         const audio = document.getElementById("myAudio");
@@ -257,36 +338,12 @@
         function toggleMusic() {
             if (audio.paused) {
                 audio.play();
-                icon.className = "fas fa-pause text-sm";
+                icon.className = "fas fa-pause text-base";
             } else {
                 audio.pause();
-                icon.className = "fas fa-play text-sm ml-0.5";
+                icon.className = "fas fa-play text-base ml-1";
             }
         }
-
-        // Intersection Observer for Modern Fade Up Animation
-        document.addEventListener('DOMContentLoaded', () => {
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.15 // Animasi mulai saat 15% elemen terlihat
-            };
-
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                        // Optional: Unobserve setelah animasi selesai agar tidak berulang
-                        observer.unobserve(entry.target); 
-                    }
-                });
-            }, observerOptions);
-
-            const reveals = document.querySelectorAll('.reveal');
-            reveals.forEach(element => {
-                observer.observe(element);
-            });
-        });
     </script>
 </body>
 </html>
