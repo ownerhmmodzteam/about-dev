@@ -7,12 +7,19 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@500&display=swap');
         
         :root {
-            --glass: rgba(15, 15, 20, 0.45);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-blur: blur(8px);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-bg: rgba(15, 15, 20, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         html, body {
@@ -22,6 +29,7 @@
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             touch-action: pan-y;
+            height: 100%;
         }
 
         a, button, .click-anim {
@@ -52,7 +60,7 @@
         .typing-container {
             font-family: 'Fira Code', monospace;
             font-size: clamp(1rem, 4vw, 2rem);
-            font-weight: 500;
+            font-weight: 600;
             color: #3b82f6;
             text-align: center;
             padding: 0 20px;
@@ -73,38 +81,41 @@
             50% { opacity: 0; }
         }
 
-        .bg-glow {
+        .video-bg {
             position: fixed;
-            top: 20%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80vw;
-            height: 80vh;
-            background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.15), transparent 60%);
-            z-index: 20;
-            pointer-events: none;
-            animation: pulse-glow 8s infinite alternate;
+            top: 0;
+            left: 0;
+            w-screen;
+            h-screen;
+            object-fit: cover;
+            z-index: 0;
         }
 
-        @keyframes pulse-glow {
-            0% { opacity: 0.5; transform: translateX(-50%) scale(1); }
-            100% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            w-screen;
+            h-screen;
+            background: rgba(5, 5, 5, 0.3);
+            z-index: 5;
+            pointer-events: none;
         }
 
         .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
             border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            transition: all 0.4s ease;
+            border-radius: 24px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .glass-card:hover {
-            background: rgba(30, 30, 40, 0.65);
-            border-color: rgba(59, 130, 246, 0.5);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+            background: rgba(20, 25, 35, 0.35);
+            border-color: rgba(59, 130, 246, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.15);
         }
 
         .tab-content {
@@ -121,8 +132,25 @@
         }
 
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { 
+                opacity: 0; 
+                transform: translateY(20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         .click-anim {
@@ -130,111 +158,229 @@
         }
 
         .click-anim:active {
-            transform: scale(0.92) !important;
+            transform: scale(0.95) !important;
         }
 
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+        nav {
+            animation: slideInRight 0.6s ease-out 0.2s both;
+        }
+
+        ::-webkit-scrollbar { 
+            width: 8px; 
+        }
+        ::-webkit-scrollbar-track { 
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb { 
+            background: rgba(59, 130, 246, 0.5); 
+            border-radius: 10px; 
+        }
+        ::-webkit-scrollbar-thumb:hover { 
+            background: rgba(59, 130, 246, 0.8); 
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #0891b2 100%);
+            color: white;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        .project-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .project-card:hover::before {
+            left: 100%;
+        }
+
+        .badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 999px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            backdrop-filter: blur(8px);
+        }
+
+        .tech-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .tech-icon {
+            transition: all 0.3s ease;
+        }
+
+        .glass-card .tech-item:hover .tech-icon {
+            transform: scale(1.15) translateY(-4px);
+            filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.6));
+        }
     </style>
 </head>
 <body class="loading min-h-screen flex flex-col items-center selection:bg-blue-500/30 selection:text-white">
 
     <div id="loader">
         <div class="typing-container">
-            <span class="text-gray-400 mr-2">></span><span id="typed-text" class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300 shadow-blue-500 drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]"></span><span class="cursor"></span>
+            <span class="text-gray-400 mr-2">></span><span id="typed-text" class="gradient-text"></span><span class="cursor"></span>
         </div>
     </div>
 
-    <video autoplay loop muted playsinline class="fixed top-0 left-0 w-screen h-screen object-cover z-0 pointer-events-none">
+    <video autoplay loop muted playsinline class="fixed top-0 left-0 w-full h-full object-cover z-0">
         <source src="latar.webm" type="video/webm">
     </video>
-    <div class="fixed top-0 left-0 w-screen h-screen bg-black/50 z-10 pointer-events-none"></div>
+    <div class="bg-overlay"></div>
 
-    <div class="bg-glow"></div>
-
-    <nav class="fixed top-6 z-40 glass-card px-2 py-2 rounded-full flex gap-2">
-        <button onclick="openTab('home')" id="btn-home" class="tab-btn click-anim px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 bg-blue-500/20 text-blue-400">Home</button>
-        <button onclick="openTab('projects')" id="btn-projects" class="tab-btn click-anim px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 text-gray-400 hover:text-white">Projects</button>
-        <button onclick="openTab('tech')" id="btn-tech" class="tab-btn click-anim px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 text-gray-400 hover:text-white">Tech Stack</button>
+    <nav class="fixed top-6 z-40 glass-card px-3 py-3 rounded-full flex gap-2">
+        <button onclick="openTab('home')" id="btn-home" class="tab-btn click-anim px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 bg-blue-500/25 text-blue-300 border border-blue-500/30">Home</button>
+        <button onclick="openTab('projects')" id="btn-projects" class="tab-btn click-anim px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 text-gray-300 hover:text-white border border-transparent hover:border-white/10">Projects</button>
+        <button onclick="openTab('tech')" id="btn-tech" class="tab-btn click-anim px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 text-gray-300 hover:text-white border border-transparent hover:border-white/10">Tech</button>
     </nav>
 
-    <main class="relative z-30 max-w-5xl w-full px-6 pt-28 pb-20">
+    <main class="relative z-30 max-w-6xl w-full px-4 sm:px-6 pt-28 pb-24">
         
-        <section id="home" class="tab-content active flex-col items-center text-center">
-            <div class="relative mb-8 group inline-block click-anim">
-                <div class="absolute inset-0 bg-blue-500 blur-[40px] opacity-30 rounded-full transition-opacity duration-500 group-hover:opacity-60"></div>
-                <img src="https://files.catbox.moe/4y3suf.png" alt="Profile" class="relative w-36 h-36 rounded-full object-cover border-[2px] border-blue-500/30 p-1 shadow-2xl">
+        <section id="home" class="tab-content active flex-col items-center text-center gap-8">
+            <div class="space-y-4 animate-fadeUp">
+                <div class="inline-block">
+                    <span class="glass-card px-4 py-2 text-sm text-blue-300 border-blue-500/30">Welcome to HM MODZ TEAM</span>
+                </div>
+                <h1 class="text-5xl sm:text-7xl font-bold leading-tight">
+                    <span class="gradient-text">Developer</span><br>
+                    <span class="text-white">Portfolio</span>
+                </h1>
+                <p class="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
+                    Solo developer Focusing on Optimality, Comfort and Safety. Specialized in streaming platforms, Android development, and cybersecurity tools.
+                </p>
             </div>
-            
-            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">
-                Muhammad Raihan
-            </h1>
-            
-            <div class="inline-flex items-center px-4 py-1.5 rounded-md bg-blue-500/10 border border-blue-500/20 text-xs tracking-[0.2em] uppercase text-blue-400 font-bold mb-8">
-                <i class="fas fa-code mr-2"></i> Software Developer
-            </div>
-            
-            <p class="text-gray-300 text-base md:text-lg leading-relaxed max-w-2xl mx-auto font-light drop-shadow-md">
-                Owner of <span class="text-white font-semibold">HM MODZ TEAM</span>. Berfokus pada pengembangan aplikasi optimal, dan selalu membuat orang bahagia tanpa memandang status sosial.
-            </p>
 
-            <div class="mt-10 flex gap-4 justify-center">
-                <button onclick="openTab('projects')" class="click-anim px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)]">
-                    Lihat Portofolio
+            <div class="grid grid-cols-3 gap-4 w-full max-w-2xl">
+                <div class="glass-card p-4 text-center">
+                    <div class="text-3xl font-bold gradient-text">10+</div>
+                    <div class="text-xs text-gray-400 mt-1">Projects Build</div>
+                </div>
+                <div class="glass-card p-4 text-center">
+                    <div class="text-3xl font-bold gradient-text">5+</div>
+                    <div class="text-xs text-gray-400 mt-1">Tech Stacks</div>
+                </div>
+                <div class="glass-card p-4 text-center">
+                    <div class="text-3xl font-bold gradient-text">100%</div>
+                    <div class="text-xs text-gray-400 mt-1">Safety</div>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 pt-6">
+                <button onclick="openTab('projects')" class="click-anim px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl transition-all shadow-[0_0_25px_rgba(59,130,246,0.3)] btn-primary">
+                    View Projects
                 </button>
-                <a href="https://t.me/hmmodzstream" target="_blank" class="click-anim px-8 py-3 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold rounded-xl transition-all backdrop-blur-md">
-                    Join Komunitas
+                <a href="https://t.me/hmmodzch" target="_blank" class="click-anim px-8 py-3 text-white font-semibold rounded-xl transition-all btn-secondary">
+                    Join Community
                 </a>
             </div>
         </section>
 
         <section id="projects" class="tab-content">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold mb-2 drop-shadow-lg">Featured Projects</h2>
-                <p class="text-gray-300 text-sm drop-shadow-md">Aplikasi unggulan yang dikembangkan oleh HM MODZ TEAM.</p>
+            <div class="text-center mb-16">
+                <h2 class="text-5xl font-bold mb-3 gradient-text">Featured Projects</h2>
+                <p class="text-gray-400 text-base max-w-xl mx-auto">Flagship applications developed by HM MODZ TEAM, showcasing modern Apps development and streaming technologies.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="glass-card p-8 flex flex-col justify-between">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="glass-card p-8 flex flex-col justify-between project-card group">
                     <div>
-                        <div class="flex justify-between items-start mb-6">
-                            <div class="w-14 h-14 bg-blue-500/20 rounded-2xl flex items-center justify-center border border-blue-500/30 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
-                                <i class="fas fa-play text-blue-400 text-2xl"></i>
+                        <div class="flex justify-between items-start mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue-500/30 to-cyan-500/20 rounded-2xl flex items-center justify-center border border-blue-500/30 shadow-[0_0_20px_rgba(59,130,246,0.2)] group-hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] transition-all">
+                                <i class="fas fa-play text-blue-300 text-3xl"></i>
                             </div>
-                            <span class="text-[10px] font-bold text-green-300 bg-green-500/20 px-3 py-1 rounded-full uppercase tracking-wider border border-green-500/20">v23.0 Online</span>
+                            <div class="badge text-green-300 bg-green-500/20 border border-green-500/30">v26.5 Beta</div>
                         </div>
-                        <h3 class="text-2xl font-bold mb-3">HM STREAM</h3>
-                        <p class="text-gray-300 text-sm mb-6 leading-relaxed">Platform streaming Anime & Film bebas iklan. Dioptimalkan dengan server bypass untuk pengalaman nonton premium gratis.</p>
+                        <h3 class="text-3xl font-bold mb-4">Nest Stream</h3>
+                        <p class="text-gray-300 text-base mb-6 leading-relaxed">
+                            Multi-feature streaming platform supporting Anime, Donghua, Dracin, Movie, and Manhwa/Manga. Ad-free experience with custom video controls, dynamic island UI, and optimized server proxies for seamless playback.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs px-3 py-1 rounded-full bg-blue-500/15 text-blue-300 border border-blue-500/20">Kotlin</span>
+                            <span class="text-xs px-3 py-1 rounded-full bg-blue-500/15 text-blue-300 border border-blue-500/20">Server</span>
+                            <span class="text-xs px-3 py-1 rounded-full bg-blue-500/15 text-blue-300 border border-blue-500/20">Java</span>
+                        </div>
                     </div>
-                    <div class="flex gap-3 mt-4">
-                        <a href="https://www.mediafire.com/file/43czh904phyajf5/hmmodz+stream_25.0_sign.apk/file" target="_blank" class="click-anim flex-1 py-3 text-center bg-white/90 text-black font-bold rounded-xl hover:bg-blue-500 hover:text-white transition-all text-xs uppercase tracking-wider shadow-lg">
+                    <div class="flex gap-3 mt-6">
+                        <a href="https://www.mediafire.com/file/qvnbl72kke537v9/Nest+Stream_26.5#Beta.apk/file" target="_blank" class="click-anim flex-1 py-3 text-center btn-primary rounded-xl hover:shadow-lg text-sm font-semibold uppercase tracking-wide transition-all">
                             Download APK
                         </a>
-                        <a href="https://vt.tiktok.com/ZSXaWu9rL/" target="_blank" class="click-anim px-5 py-3 flex items-center justify-center bg-white/10 border border-white/20 rounded-xl hover:bg-white/20 transition-all text-white shadow-lg">
-                            <i class="fas fa-eye"></i>
+                        <a href="https://vt.tiktok.com/ZS4Mvb25C/" target="_blank" class="click-anim px-6 py-3 flex items-center justify-center btn-secondary rounded-xl font-semibold text-white transition-all">
+                            <i class="fas fa-link"></i>
                         </a>
                     </div>
                 </div>
 
-                <div class="glass-card p-8 flex flex-col justify-between">
+                <div class="glass-card p-8 flex flex-col justify-between project-card group">
                     <div>
-                        <div class="flex justify-between items-start mb-6">
-                            <div class="w-14 h-14 bg-red-500/20 rounded-2xl flex items-center justify-center border border-red-500/30 shadow-[0_0_15px_rgba(239,68,68,0.2)]">
-                                <i class="fab fa-youtube text-red-400 text-2xl"></i>
+                        <div class="flex justify-between items-start mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-red-500/30 to-pink-500/20 rounded-2xl flex items-center justify-center border border-red-500/30 shadow-[0_0_20px_rgba(239,68,68,0.2)] group-hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all">
+                                <i class="fab fa-youtube text-red-300 text-3xl"></i>
                             </div>
-                            <span class="text-[10px] font-bold text-red-300 bg-red-500/20 px-3 py-1 rounded-full uppercase tracking-wider border border-red-500/20">Closed/Offline</span>
+                            <div class="badge text-red-300 bg-red-500/20 border border-red-500/30">Offline</div>
                         </div>
-                        <h3 class="text-2xl font-bold mb-3">HM TUBE</h3>
-                        <p class="text-gray-300 text-sm mb-6 leading-relaxed">Modifikasi klien YouTube dengan fiture premium dan memiliki hak acces mengambil database youtube.</p>
+                        <h3 class="text-3xl font-bold mb-4">HM TUBE</h3>
+                        <p class="text-gray-300 text-base mb-6 leading-relaxed">
+                            Modified YouTube client with premium features and direct database access capabilities. Custom video player with quality selector, advanced playback controls, and optimized streaming for Indonesian users.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs px-3 py-1 rounded-full bg-red-500/15 text-red-300 border border-red-500/20">Android</span>
+                            <span class="text-xs px-3 py-1 rounded-full bg-red-500/15 text-red-300 border border-red-500/20">Kotlin</span>
+                            <span class="text-xs px-3 py-1 rounded-full bg-red-500/15 text-red-300 border border-red-500/20">API</span>
+                        </div>
                     </div>
-                    <div class="flex gap-3 mt-4">
-                        <a href="https://www.mediafire.com/file/88xxt1p5uxm57iz/HM+TUBE_1.5.apk/file" target="_blank" class="click-anim flex-1 py-3 text-center bg-white/90 text-black font-bold rounded-xl hover:bg-red-500 hover:text-white transition-all text-xs uppercase tracking-wider shadow-lg">
+                    <div class="flex gap-3 mt-6">
+                        <a href="https://www.mediafire.com/file/88xxt1p5uxm57iz/HM+TUBE_1.5.apk/file" target="_blank" class="click-anim flex-1 py-3 text-center btn-primary rounded-xl hover:shadow-lg text-sm font-semibold uppercase tracking-wide transition-all">
                             Download APK
                         </a>
-                        <a href="https://t.me/hmmodzstream" target="_blank" class="click-anim px-5 py-3 flex items-center justify-center bg-white/10 border border-white/20 rounded-xl hover:bg-white/20 transition-all text-white shadow-lg">
-                            <i class="fas fa-eye"></i>
+                        <a href="https://t.me/hmmodzch" target="_blank" class="click-anim px-6 py-3 flex items-center justify-center btn-secondary rounded-xl font-semibold text-white transition-all">
+                            <i class="fas fa-link"></i>
                         </a>
                     </div>
                 </div>
@@ -242,40 +388,83 @@
         </section>
 
         <section id="tech" class="tab-content">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold mb-2 drop-shadow-lg">My Arsenal</h2>
-                <p class="text-gray-300 text-sm drop-shadow-md">Teknologi dan tools yang digunakan di balik layar HM MODZ.</p>
+            <div class="text-center mb-16">
+                <h2 class="text-5xl font-bold mb-3 gradient-text">Tech Arsenal</h2>
+                <p class="text-gray-400 text-base max-w-xl mx-auto">Technologies and tools powering HM MODZ projects across web, mobile, and backend development.</p>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="glass-card click-anim p-6 flex flex-col items-center justify-center text-center group cursor-default">
-                    <i class="fab fa-android text-4xl text-green-400 mb-4 group-hover:scale-110 transition-transform drop-shadow-[0_0_8px_rgba(74,222,128,0.5)]"></i>
-                    <h4 class="font-bold">Android Dev</h4>
-                    <p class="text-xs text-gray-300 mt-1">Java / Kotlin</p>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div class="glass-card click-anim p-6 flex flex-col items-center justify-center text-center group">
+                    <div class="tech-icon">
+                        <i class="fab fa-android text-5xl text-green-400 drop-shadow-[0_0_12px_rgba(74,222,128,0.4)]"></i>
+                    </div>
+                    <h4 class="font-bold mt-4 text-white">Android Dev</h4>
+                    <p class="text-xs text-gray-400 mt-2">Java / Kotlin</p>
                 </div>
-                <div class="glass-card click-anim p-6 flex flex-col items-center justify-center text-center group cursor-default">
-                    <i class="fas fa-bug text-4xl text-blue-400 mb-4 group-hover:scale-110 transition-transform drop-shadow-[0_0_8px_rgba(96,165,250,0.5)]"></i>
-                    <h4 class="font-bold">Reverse Eng.</h4>
-                    <p class="text-xs text-gray-300 mt-1">Frida, Linux Tools</p>
+
+                <div class="glass-card click-anim p-6 flex flex-col items-center justify-center text-center group">
+                    <div class="tech-icon">
+                        <i class="fab fa-js-square text-5xl text-yellow-400 drop-shadow-[0_0_12px_rgba(250,204,21,0.4)]"></i>
+                    </div>
+                    <h4 class="font-bold mt-4 text-white">JavaScript</h4>
+                    <p class="text-xs text-gray-400 mt-2">Vanilla / Node.js</p>
                 </div>
-                <div class="glass-card click-anim p-6 flex flex-col items-center justify-center text-center group cursor-default">
-                    <i class="fab fa-python text-4xl text-yellow-400 mb-4 group-hover:scale-110 transition-transform drop-shadow-[0_0_8px_rgba(250,204,21,0.5)]"></i>
-                    <h4 class="font-bold">Python</h4>
-                    <p class="text-xs text-gray-300 mt-1">Scripts/Tools</p>
+
+                <div class="glass-card click-anim p-6 flex flex-col items-center justify-center text-center group">
+                    <div class="tech-icon">
+                        <i class="fab fa-python text-5xl text-blue-400 drop-shadow-[0_0_12px_rgba(59,130,246,0.4)]"></i>
+                    </div>
+                    <h4 class="font-bold mt-4 text-white">Python</h4>
+                    <p class="text-xs text-gray-400 mt-2">Scripts / Tools</p>
                 </div>
-                <div class="glass-card click-anim p-6 flex flex-col items-center justify-center text-center group cursor-default">
-                    <i class="fas fa-server text-4xl text-purple-400 mb-4 group-hover:scale-110 transition-transform drop-shadow-[0_0_8px_rgba(192,132,252,0.5)]"></i>
-                    <h4 class="font-bold">API / Backend</h4>
-                    <p class="text-xs text-gray-300 mt-1">Node.js / PHP</p>
+
+                <div class="glass-card click-anim p-6 flex flex-col items-center justify-center text-center group">
+                    <div class="tech-icon">
+                        <i class="fas fa-code-branch text-5xl text-purple-400 drop-shadow-[0_0_12px_rgba(168,85,247,0.4)]"></i>
+                    </div>
+                    <h4 class="font-bold mt-4 text-white">Git / Vercel</h4>
+                    <p class="text-xs text-gray-400 mt-2">Deployment</p>
+                </div>
+
+                <div class="glass-card click-anim p-6 flex flex-col items-center justify-center text-center group">
+                    <div class="tech-icon">
+                        <i class="fas fa-database text-5xl text-pink-400 drop-shadow-[0_0_12px_rgba(236,72,153,0.4)]"></i>
+                    </div>
+                    <h4 class="font-bold mt-4 text-white">Firebase</h4>
+                    <p class="text-xs text-gray-400 mt-2">Realtime DB</p>
+                </div>
+
+                <div class="glass-card click-anim p-6 flex flex-col items-center justify-center text-center group">
+                    <div class="tech-icon">
+                        <i class="fas fa-lock text-5xl text-orange-400 drop-shadow-[0_0_12px_rgba(249,115,22,0.4)]"></i>
+                    </div>
+                    <h4 class="font-bold mt-4 text-white">Cybersecurity</h4>
+                    <p class="text-xs text-gray-400 mt-2">Penetration Testing</p>
+                </div>
+
+                <div class="glass-card click-anim p-6 flex flex-col items-center justify-center text-center group">
+                    <div class="tech-icon">
+                        <i class="fas fa-bug text-5xl text-cyan-400 drop-shadow-[0_0_12px_rgba(34,211,238,0.4)]"></i>
+                    </div>
+                    <h4 class="font-bold mt-4 text-white">Reverse Eng.</h4>
+                    <p class="text-xs text-gray-400 mt-2">Frida / Linux</p>
+                </div>
+
+                <div class="glass-card click-anim p-6 flex flex-col items-center justify-center text-center group">
+                    <div class="tech-icon">
+                        <i class="fas fa-server text-5xl text-indigo-400 drop-shadow-[0_0_12px_rgba(99,102,241,0.4)]"></i>
+                    </div>
+                    <h4 class="font-bold mt-4 text-white">API / Backend</h4>
+                    <p class="text-xs text-gray-400 mt-2">REST / Express</p>
                 </div>
             </div>
         </section>
     </main>
 
     <div class="fixed bottom-6 right-6 z-50">
-        <div class="click-anim w-14 h-14 bg-white/10 backdrop-blur-lg border border-white/20 text-white rounded-full flex items-center justify-center cursor-pointer hover:bg-white hover:text-black transition-all shadow-[0_0_20px_rgba(0,0,0,0.5)]" onclick="toggleMusic()">
-            <i id="music-icon" class="fas fa-play text-base"></i>
-        </div>
+        <button class="click-anim w-14 h-14 glass-card flex items-center justify-center cursor-pointer hover:bg-white/20 transition-all text-white font-semibold" onclick="toggleMusic()" title="Toggle Music">
+            <i id="music-icon" class="fas fa-play text-lg"></i>
+        </button>
         <audio id="myAudio" loop>
             <source src="sta.mp3" type="audio/mpeg">
         </audio>
@@ -283,7 +472,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const textToType = "Welcome To HM MODZ PROJECT";
+            const textToType = "Welcome To Nest Stream";
             const typedTextElement = document.getElementById("typed-text");
             const loader = document.getElementById("loader");
             let index = 0;
@@ -292,21 +481,20 @@
                 if (index < textToType.length) {
                     typedTextElement.textContent += textToType.charAt(index);
                     index++;
-                    const typingSpeed = Math.floor(Math.random() * (120 - 60 + 1)) + 60; 
+                    const typingSpeed = Math.floor(Math.random() * (100 - 50 + 1)) + 50;
                     setTimeout(typeText, typingSpeed);
                 } else {
                     setTimeout(() => {
                         loader.classList.add("hidden");
                         document.body.classList.remove("loading");
-                        
                         setTimeout(() => {
                             loader.remove();
-                        }, 800); 
-                    }, 1000); 
+                        }, 800);
+                    }, 1200);
                 }
             }
 
-            setTimeout(typeText, 500);
+            setTimeout(typeText, 400);
         });
 
         function openTab(tabName) {
@@ -314,21 +502,21 @@
             tabs.forEach(tab => {
                 tab.classList.remove('active');
                 tab.style.animation = 'none';
-                tab.offsetHeight; 
+                tab.offsetHeight;
             });
 
             const btns = document.querySelectorAll('.tab-btn');
             btns.forEach(btn => {
-                btn.className = "tab-btn click-anim px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 text-gray-400 hover:text-white";
+                btn.className = "tab-btn click-anim px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 text-gray-300 hover:text-white border border-transparent hover:border-white/10";
             });
 
             const activeTab = document.getElementById(tabName);
             activeTab.classList.add('active');
             activeTab.style.animation = 'fadeUp 0.5s ease-out forwards';
-            
+
             const activeBtn = document.getElementById('btn-' + tabName);
-            activeBtn.className = "tab-btn click-anim px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 bg-blue-500/20 text-blue-400";
-            
+            activeBtn.className = "tab-btn click-anim px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 bg-blue-500/25 text-blue-300 border border-blue-500/30";
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -338,12 +526,19 @@
         function toggleMusic() {
             if (audio.paused) {
                 audio.play();
-                icon.className = "fas fa-pause text-base";
+                icon.className = "fas fa-pause text-lg";
             } else {
                 audio.pause();
-                icon.className = "fas fa-play text-base ml-1";
+                icon.className = "fas fa-play text-lg";
             }
         }
+
+        // Prevent context menu on images
+        document.addEventListener('contextmenu', (e) => {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+            }
+        });
     </script>
 </body>
 </html>
