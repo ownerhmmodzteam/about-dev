@@ -3,541 +3,1092 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#030508">
+    <meta name="description" content="HM MODZ TEAM — Developer Portfolio">
     <title>HM MODZ TEAM | Developer Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@500&display=swap');
-        
         :root {
-            --glass-blur: blur(8px);
-            --glass-border: rgba(255, 255, 255, 0.15);
-            --glass-bg: rgba(15, 15, 20, 0.25);
+            --bg: #030508;
+            --panel: rgba(13, 16, 24, .75);
+            --line: rgba(255,255,255,.06);
+            --muted: #8b94a7;
+            --text: #f5f7fb;
+            --blue: #5b8cff;
+            --cyan: #37d9ff;
+            --green: #42e8a0;
+            --blur: blur(28px);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html {
+            font-size: 14.5px;
         }
 
-        html, body {
-            background-color: #050505;
-            color: #ffffff;
+        body {
+            background: var(--bg);
+            color: var(--text);
             font-family: 'Plus Jakarta Sans', sans-serif;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             touch-action: pan-y;
-            height: 100%;
         }
 
-        a, button, .click-anim {
-            touch-action: manipulation;
+        body.loading { overflow: hidden; }
+
+        ::selection {
+            background: rgba(91,140,255,.35);
+            color: #fff;
         }
 
-        body.loading {
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(91,140,255,.30);
+            border-radius: 999px;
+        }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(91,140,255,.65); }
+
+        .ambient {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
             overflow: hidden;
+        }
+
+        .ambient::before,
+        .ambient::after {
+            content: "";
+            position: absolute;
+            width: 45vw;
+            height: 45vw;
+            min-width: 300px;
+            min-height: 300px;
+            border-radius: 999px;
+            filter: blur(110px);
+            opacity: .12;
+        }
+
+        .ambient::before {
+            top: -15vw;
+            left: -15vw;
+            background: #245cff;
+        }
+
+        .ambient::after {
+            right: -10vw;
+            bottom: -20vw;
+            background: #a855f7;
+        }
+
+        .video-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            background: #030508;
+        }
+
+        .video-layer video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: .18;
+            filter: saturate(1.1) contrast(1.1);
+        }
+
+        .video-layer::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(180deg, rgba(3,5,8,.75), rgba(3,5,8,.4) 40%, rgba(3,5,8,.95)),
+                radial-gradient(circle at 50% 10%, transparent, rgba(3,5,8,.6) 80%);
+        }
+
+        .noise {
+            position: fixed;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+            opacity: .04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.65'/%3E%3C/svg%3E");
+        }
+
+        .glass {
+            background: linear-gradient(145deg, rgba(255,255,255,.06), rgba(255,255,255,.01));
+            border: 1px solid var(--line);
+            box-shadow: 0 25px 80px rgba(0,0,0,.25), inset 0 1px rgba(255,255,255,.05);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+        }
+
+        .glass-hover {
+            transition: transform .4s cubic-bezier(.2,.8,.2,1), border-color .4s ease, background .4s ease, box-shadow .4s ease;
+        }
+
+        .glass-hover:hover {
+            transform: translateY(-6px);
+            border-color: rgba(91,140,255,.35);
+            background: linear-gradient(145deg, rgba(255,255,255,.09), rgba(255,255,255,.02));
+            box-shadow: 0 30px 100px rgba(0,0,0,.4), 0 0 45px rgba(91,140,255,.1);
+        }
+
+        .gradient-text {
+            background: linear-gradient(110deg, #fff 10%, #8cb3ff 48%, #5ee7ff 92%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(91,140,255,.25);
+            background: rgba(91,140,255,.1);
+            color: #b0c9ff;
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            box-shadow: 0 0 20px rgba(91,140,255,.1);
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 14px rgba(66,232,160,.8);
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            0%,100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(.7); opacity: .55; }
         }
 
         #loader {
             position: fixed;
             inset: 0;
-            background-color: #050505;
             z-index: 9999;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            background: #030508;
+            transition: opacity .75s ease, visibility .75s ease, transform .75s ease;
         }
 
         #loader.hidden {
             opacity: 0;
-            transform: scale(1.1);
+            visibility: hidden;
+            transform: scale(1.03);
             pointer-events: none;
         }
 
-        .typing-container {
+        .loader-inner {
+            width: min(520px, calc(100% - 44px));
+        }
+
+        .loader-brand {
             font-family: 'Fira Code', monospace;
-            font-size: clamp(1rem, 4vw, 2rem);
+            color: #90b5ff;
+            font-size: 13px;
+            margin-bottom: 14px;
+        }
+
+        .loader-line {
+            height: 1px;
+            background: rgba(255,255,255,.08);
+            overflow: hidden;
+        }
+
+        .loader-line span {
+            display: block;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #5b8cff, #37d9ff);
+            animation: loadline 2.5s ease forwards;
+        }
+
+        @keyframes loadline {
+            to { width: 100%; }
+        }
+
+        .typing {
+            min-height: 30px;
+            font-family: 'Fira Code', monospace;
+            font-size: clamp(15px, 4vw, 19px);
             font-weight: 600;
-            color: #3b82f6;
-            text-align: center;
-            padding: 0 20px;
+            margin-bottom: 15px;
         }
 
         .cursor {
             display: inline-block;
-            width: 10px;
-            height: 1.2em;
-            background-color: #3b82f6;
-            vertical-align: middle;
+            width: 8px;
+            height: 1em;
             margin-left: 5px;
-            animation: blink 0.8s infinite;
+            background: #5b8cff;
+            vertical-align: -2px;
+            animation: blink .8s infinite;
         }
 
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        .video-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            w-screen;
-            h-screen;
-            object-fit: cover;
-            z-index: 0;
-        }
-
-        .bg-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            w-screen;
-            h-screen;
-            background: rgba(5, 5, 5, 0.3);
-            z-index: 5;
-            pointer-events: none;
-        }
-
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .glass-card:hover {
-            background: rgba(20, 25, 35, 0.35);
-            border-color: rgba(59, 130, 246, 0.4);
-            transform: translateY(-4px);
-            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.15);
-        }
-
-        .tab-content {
-            display: none;
-            animation: fadeUp 0.5s ease-out forwards;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        #home.active {
-            display: flex;
-        }
-
-        @keyframes fadeUp {
-            from { 
-                opacity: 0; 
-                transform: translateY(20px); 
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .click-anim {
-            transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .click-anim:active {
-            transform: scale(0.95) !important;
-        }
+        @keyframes blink { 50% { opacity: 0; } }
 
         nav {
-            animation: slideInRight 0.6s ease-out 0.2s both;
+            animation: navIn .8s cubic-bezier(.2,.8,.2,1) .15s both;
         }
 
-        ::-webkit-scrollbar { 
-            width: 8px; 
-        }
-        ::-webkit-scrollbar-track { 
-            background: transparent; 
-        }
-        ::-webkit-scrollbar-thumb { 
-            background: rgba(59, 130, 246, 0.5); 
-            border-radius: 10px; 
-        }
-        ::-webkit-scrollbar-thumb:hover { 
-            background: rgba(59, 130, 246, 0.8); 
+        @keyframes navIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .gradient-text {
-            background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .tab-content { display: none; animation: pageIn .6s cubic-bezier(.2,.8,.2,1) both; }
+        .tab-content.active { display: block; }
+        #home.active { display: flex; }
+
+        @keyframes pageIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #3b82f6 0%, #0891b2 100%);
-            color: white;
-            font-weight: 600;
-            border: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        .click-anim { transition: transform .15s ease; }
+        .click-anim:active { transform: scale(.95); }
+
+        .hero-grid {
+            position: relative;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 28px rgba(59, 130, 246, 0.4);
+        .hero-grid::before {
+            content: "";
+            position: absolute;
+            inset: -80px;
+            background-image: linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(circle at center, black 0%, transparent 65%);
+            -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 65%);
+            pointer-events: none;
+            opacity: .4;
         }
 
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.08);
-            color: white;
-            font-weight: 600;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(8px);
-            transition: all 0.3s ease;
+        .hero-title {
+            letter-spacing: -.05em;
+            line-height: 1;
         }
 
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(59, 130, 246, 0.5);
+        .hero-copy {
+            color: #a4adbe;
+            max-width: 700px;
+        }
+
+        .metric {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric::after {
+            content: "";
+            position: absolute;
+            right: -25px;
+            top: -25px;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: rgba(91,140,255,.1);
+            filter: blur(20px);
         }
 
         .project-card {
             position: relative;
             overflow: hidden;
+            min-height: 440px;
         }
 
         .project-card::before {
-            content: '';
+            content: "";
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.5s ease;
+            inset: 0;
+            background: radial-gradient(circle at 90% 0%, var(--project-glow, rgba(91,140,255,.12)), transparent 40%);
+            pointer-events: none;
+            transition: opacity .4s ease;
+            opacity: 0.6;
         }
 
         .project-card:hover::before {
-            left: 100%;
+            opacity: 1;
         }
 
-        .badge {
+        .project-number {
+            font-family: 'Fira Code', monospace;
+            color: rgba(255,255,255,.25);
             font-size: 11px;
-            font-weight: 700;
-            padding: 6px 14px;
-            border-radius: 999px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            backdrop-filter: blur(8px);
+            letter-spacing: .1em;
         }
 
-        .tech-item {
-            display: flex;
-            flex-direction: column;
+        .project-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 20px;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(255,255,255,.12);
+            background: rgba(255,255,255,.05);
+            font-size: 26px;
+            transition: transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s ease, background .4s ease;
+        }
+
+        .project-card:hover .project-icon {
+            transform: translateY(-4px) rotate(-4deg) scale(1.05);
+            background: rgba(255,255,255,.08);
+        }
+
+        .tag {
+            border: 1px solid rgba(255,255,255,.08);
+            background: rgba(255,255,255,.03);
+            color: #b3bdd2;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .03em;
+            transition: background .3s ease, border-color .3s ease;
+        }
+
+        .project-card:hover .tag {
+            background: rgba(255,255,255,.06);
+            border-color: rgba(255,255,255,.15);
+        }
+
+        .project-link {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
+            min-height: 48px;
+            border-radius: 14px;
+            padding: 0 18px;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: .02em;
+            transition: all .3s cubic-bezier(.2,.8,.2,1);
+        }
+
+        .project-link.primary {
+            color: #fff;
+            background: linear-gradient(135deg, #4e7fff, #2bc8ef);
+            box-shadow: 0 12px 35px rgba(59,130,246,.25);
+            border: 1px solid rgba(255,255,255,.1);
+        }
+
+        .project-link.primary:hover { 
+            filter: brightness(1.15); 
+            transform: translateY(-3px);
+            box-shadow: 0 15px 45px rgba(59,130,246,.35);
+        }
+
+        .project-link.secondary {
+            border: 1px solid rgba(255,255,255,.1);
+            color: #d7dce7;
+            background: rgba(255,255,255,.03);
+        }
+
+        .project-link.secondary:hover {
+            background: rgba(255,255,255,.1);
+            border-color: rgba(255,255,255,.25);
+            transform: translateY(-3px);
         }
 
         .tech-icon {
-            transition: all 0.3s ease;
+            transition: transform .4s cubic-bezier(.2,.8,.2,1), filter .4s ease;
         }
 
-        .glass-card .tech-item:hover .tech-icon {
-            transform: scale(1.15) translateY(-4px);
-            filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.6));
+        .tech-card:hover .tech-icon {
+            transform: translateY(-6px) scale(1.1);
+            filter: drop-shadow(0 0 18px rgba(91,140,255,.45));
+        }
+
+        .music-button {
+            width: 56px;
+            height: 56px;
+            display: grid;
+            place-items: center;
+            border-radius: 20px;
+            color: white;
+            transition: transform .3s ease;
+        }
+
+        .music-button:hover {
+            transform: scale(1.05);
+        }
+
+        .music-ring {
+            position: absolute;
+            inset: -6px;
+            border: 1px solid rgba(91,140,255,.2);
+            border-radius: 25px;
+            animation: ring 2.5s infinite cubic-bezier(.2,.8,.2,1);
+            pointer-events: none;
+        }
+
+        @keyframes ring {
+            0%,100% { opacity: .2; transform: scale(.95); }
+            50% { opacity: .8; transform: scale(1.05); box-shadow: 0 0 20px rgba(91,140,255,.15); }
+        }
+
+        .footer-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent);
+        }
+
+        .ripple {
+            position: absolute;
+            border-radius: 999px;
+            transform: scale(0);
+            animation: ripple .6s ease-out;
+            background: rgba(255,255,255,.25);
+            pointer-events: none;
+        }
+
+        @keyframes ripple {
+            to { transform: scale(4); opacity: 0; }
+        }
+
+        .pressable {
+            position: relative;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .pressable.is-pressed {
+            transform: scale(.95) !important;
+            filter: brightness(1.2);
+        }
+
+        .project-card,
+        .tech-card,
+        .metric,
+        .project-link,
+        .tab-btn,
+        .music-button {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .project-card.is-selected {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(91,140,255,.45);
+            box-shadow: 0 35px 100px rgba(0,0,0,.45), 0 0 50px rgba(91,140,255,.15);
+        }
+
+        .project-card.is-selected .project-icon {
+            transform: scale(1.1) rotate(-5deg);
+            box-shadow: 0 0 45px rgba(91,140,255,.25) !important;
+            background: rgba(255,255,255,.1);
+        }
+
+        .tech-card {
+            cursor: pointer;
+            transition: transform .3s cubic-bezier(.2,.8,.2,1),
+                        border-color .3s ease,
+                        box-shadow .3s ease,
+                        background .3s ease;
+        }
+
+        .tech-card.is-selected {
+            transform: translateY(-8px) scale(1.03);
+            border-color: rgba(91,140,255,.45);
+            box-shadow: 0 30px 80px rgba(0,0,0,.4), 0 0 40px rgba(91,140,255,.15);
+            background: linear-gradient(145deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+        }
+
+        .tech-card.is-selected .tech-icon {
+            transform: translateY(-5px) scale(1.15);
+            filter: drop-shadow(0 0 22px rgba(91,140,255,.55));
+        }
+
+        .click-feedback {
+            animation: clickFeedback .45s cubic-bezier(.2,.8,.2,1);
+        }
+
+        @keyframes clickFeedback {
+            0% { transform: scale(.96); }
+            45% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: 24px;
+            z-index: 100;
+            width: min(390px, calc(100% - 32px));
+            padding: 14px 18px;
+            border: 1px solid rgba(255,255,255,.15);
+            border-radius: 18px;
+            background: rgba(14,17,25,.92);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            box-shadow: 0 20px 60px rgba(0,0,0,.45), 0 0 20px rgba(91,140,255,.08);
+            color: #e8edf7;
+            font-size: 13px;
+            font-weight: 500;
+            line-height: 1.5;
+            text-align: center;
+            transform: translate(-50%, 30px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .3s cubic-bezier(.2,.8,.2,1), transform .3s cubic-bezier(.2,.8,.2,1);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        @media (max-width: 640px) {
+            nav {
+                top: 12px !important;
+                left: 12px !important;
+                right: 12px !important;
+                width: auto !important;
+                transform: none !important;
+                padding: 6px !important;
+                border-radius: 20px !important;
+                gap: 4px !important;
+            }
+
+            nav .tab-btn {
+                flex: 1 1 0;
+                min-width: 0;
+                padding: 12px 8px !important;
+                font-size: 12px !important;
+                white-space: nowrap;
+            }
+
+            main {
+                padding-left: 16px !important;
+                padding-right: 16px !important;
+                padding-top: 104px !important;
+            }
+
+            .hero-title {
+                font-size: clamp(2.8rem, 14vw, 4.2rem) !important;
+                line-height: .95;
+            }
+
+            .hero-copy {
+                font-size: 14px !important;
+                line-height: 1.8 !important;
+            }
+
+            .project-card {
+                border-radius: 26px !important;
+                padding: 22px !important;
+                min-height: 0;
+            }
+
+            .project-card .project-link {
+                min-height: 50px;
+            }
+
+            .project-card .project-link.secondary {
+                width: 50px !important;
+                flex: 0 0 50px;
+            }
+
+            .project-icon {
+                width: 58px;
+                height: 58px;
+                border-radius: 18px;
+            }
+
+            .metric {
+                padding: 14px !important;
+                border-radius: 18px !important;
+            }
+
+            .metric .text-2xl {
+                font-size: 1.45rem !important;
+            }
+
+            .metric .text-\[10px\] {
+                font-size: 10px !important;
+            }
+
+            .tech-card {
+                padding: 20px 14px !important;
+                border-radius: 24px !important;
+            }
+
+            .tech-card .text-5xl {
+                font-size: 2.6rem !important;
+            }
+
+            .music-button {
+                width: 50px;
+                height: 50px;
+                border-radius: 18px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: .01ms !important;
+            }
         }
     </style>
 </head>
-<body class="loading min-h-screen flex flex-col items-center selection:bg-blue-500/30 selection:text-white">
 
+<body class="loading min-h-screen">
     <div id="loader">
-        <div class="typing-container">
-            <span class="text-gray-400 mr-2">></span><span id="typed-text" class="gradient-text"></span><span class="cursor"></span>
+        <div class="loader-inner">
+            <div class="loader-brand">&gt; HM_MODZ_TEAM / PORTFOLIO</div>
+            <div class="typing"><span id="typed-text" class="gradient-text"></span><span class="cursor"></span></div>
+            <div class="loader-line"><span></span></div>
         </div>
     </div>
 
-    <video autoplay loop muted playsinline class="fixed top-0 left-0 w-full h-full object-cover z-0">
-        <source src="latar.webm" type="video/webm">
-    </video>
-    <div class="bg-overlay"></div>
+    <div class="video-layer">
+        <video autoplay loop muted playsinline>
+            <source src="latar.webm" type="video/webm">
+        </video>
+    </div>
+    <div class="ambient"></div>
+    <div class="noise"></div>
 
-    <nav class="fixed top-6 z-40 glass-card px-3 py-3 rounded-full flex gap-2">
-        <button onclick="openTab('home')" id="btn-home" class="tab-btn click-anim px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 bg-blue-500/25 text-blue-300 border border-blue-500/30">Home</button>
-        <button onclick="openTab('projects')" id="btn-projects" class="tab-btn click-anim px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 text-gray-300 hover:text-white border border-transparent hover:border-white/10">Projects</button>
-        <button onclick="openTab('tech')" id="btn-tech" class="tab-btn click-anim px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 text-gray-300 hover:text-white border border-transparent hover:border-white/10">Tech</button>
+    <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 glass rounded-full px-2 py-2 flex gap-1 w-auto justify-center">
+        <button onclick="openTab('home')" id="btn-home" class="tab-btn pressable click-anim px-6 py-2.5 rounded-full text-sm font-bold bg-white/10 text-white border border-white/10">Home</button>
+        <button onclick="openTab('projects')" id="btn-projects" class="tab-btn pressable click-anim px-6 py-2.5 rounded-full text-sm font-bold text-gray-400 hover:text-white">Projects</button>
+        <button onclick="openTab('tech')" id="btn-tech" class="tab-btn pressable click-anim px-6 py-2.5 rounded-full text-sm font-bold text-gray-400 hover:text-white">Tech</button>
     </nav>
 
-    <main class="relative z-30 max-w-6xl w-full px-4 sm:px-6 pt-28 pb-24">
-        
-        <section id="home" class="tab-content active flex-col items-center text-center gap-8">
-            <div class="space-y-4 animate-fadeUp">
-                <div class="inline-block">
-                    <span class="glass-card px-4 py-2 text-sm text-blue-300 border-blue-500/30">Welcome to HM MODZ TEAM</span>
-                </div>
-                <h1 class="text-5xl sm:text-7xl font-bold leading-tight">
-                    <span class="gradient-text">Developer</span><br>
-                    <span class="text-white">Portfolio</span>
-                </h1>
-                <p class="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
-                    Solo developer Focusing on Optimality, Comfort and Safety. Specialized in streaming platforms, Android development, and cybersecurity tools.
-                </p>
-            </div>
+    <main class="relative z-30 max-w-6xl w-full mx-auto px-6 pt-32 pb-24">
 
-            <div class="grid grid-cols-3 gap-4 w-full max-w-2xl">
-                <div class="glass-card p-4 text-center">
-                    <div class="text-3xl font-bold gradient-text">10+</div>
-                    <div class="text-xs text-gray-400 mt-1">Projects Build</div>
-                </div>
-                <div class="glass-card p-4 text-center">
-                    <div class="text-3xl font-bold gradient-text">5+</div>
-                    <div class="text-xs text-gray-400 mt-1">Tech Stacks</div>
-                </div>
-                <div class="glass-card p-4 text-center">
-                    <div class="text-3xl font-bold gradient-text">100%</div>
-                    <div class="text-xs text-gray-400 mt-1">Safety</div>
-                </div>
-            </div>
+        <section id="home" class="tab-content active min-h-[78vh] flex-col justify-center items-center text-center">
+            <div class="hero-grid w-full flex flex-col items-center">
+                <div class="relative z-10 space-y-7">
+                    <div class="eyebrow mx-auto">
+                        <span class="status-dot"></span>
+                        Selamat datang di portofolio
+                    </div>
 
-            <div class="flex flex-col sm:flex-row gap-4 pt-6">
-                <button onclick="openTab('projects')" class="click-anim px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl transition-all shadow-[0_0_25px_rgba(59,130,246,0.3)] btn-primary">
-                    View Projects
-                </button>
-                <a href="https://whatsapp.com/channel/0029VbDEngBHLHQW7qb3pg3f" target="_blank" class="click-anim px-8 py-3 text-white font-semibold rounded-xl transition-all btn-secondary">
-                    Join Community
-                </a>
+                    <div>
+                        <div class="text-sm text-gray-500 font-bold tracking-[.24em] uppercase mb-5">HM MODZ TEAM</div>
+                        <h1 class="hero-title text-7xl lg:text-8xl font-extrabold">
+                            <span class="text-white">Halo,</span>
+                            <span class="gradient-text">selamat datang.</span>
+                        </h1>
+                    </div>
+
+                    <p class="hero-copy mx-auto text-lg leading-8 font-medium">
+                        Ini adalah portofolio HM MODZ TEAM, tempat aku menampilkan berbagai aplikasi,
+                        eksperimen, dan project yang sedang maupun pernah aku bangun. Fokus utamanya
+                        adalah membuat aplikasi yang nyaman digunakan, optimal, dan punya pengalaman
+                        pengguna yang tetap terasa modern.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-3">
+                        <button onclick="openTab('projects')" class="pressable click-anim project-link primary w-full sm:w-auto px-8">
+                            Lihat Project <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <a href="https://whatsapp.com/channel/0029VbDQhK9GufIwKphQYn1v" target="_blank" class="pressable click-anim project-link secondary w-full sm:w-auto px-8">
+                            <i class="fab fa-whatsapp text-green-400 text-lg"></i> Komunitas
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4 w-full max-w-3xl mt-16 relative z-10">
+                    <div class="metric glass rounded-2xl p-6 text-left">
+                        <div class="text-3xl font-extrabold gradient-text">10+</div>
+                        <div class="text-xs text-gray-400 mt-2 font-semibold tracking-wide uppercase">Project Dibuat</div>
+                    </div>
+                    <div class="metric glass rounded-2xl p-6 text-left">
+                        <div class="text-3xl font-extrabold gradient-text">9+</div>
+                        <div class="text-xs text-gray-400 mt-2 font-semibold tracking-wide uppercase">Teknologi</div>
+                    </div>
+                    <div class="metric glass rounded-2xl p-6 text-left">
+                        <div class="text-3xl font-extrabold gradient-text">24/7</div>
+                        <div class="text-xs text-gray-400 mt-2 font-semibold tracking-wide uppercase">Eksplorasi</div>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section id="projects" class="tab-content">
-            <div class="text-center mb-16">
-                <h2 class="text-5xl font-bold mb-3 gradient-text">Featured Projects</h2>
-                <p class="text-gray-400 text-base max-w-xl mx-auto">Flagship applications developed by HM MODZ TEAM, showcasing modern Apps development and streaming technologies.</p>
+            <div class="max-w-3xl mb-14">
+                <div class="eyebrow mb-6"><span class="status-dot"></span> Project pilihan</div>
+                <h2 class="text-6xl font-extrabold tracking-tight">
+                    Project yang <span class="gradient-text">aku bangun.</span>
+                </h2>
+                <p class="text-gray-400 text-base leading-8 mt-6 font-medium">
+                    Kumpulan aplikasi dan eksperimen yang berfokus pada media, hiburan, Android,
+                    API, serta pengalaman pengguna yang sederhana dan nyaman.
+                </p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="glass-card p-8 flex flex-col justify-between project-card group">
-                    <div>
-                        <div class="flex justify-between items-start mb-8">
-                            <div class="w-16 h-16 bg-gradient-to-br from-blue-500/30 to-cyan-500/20 rounded-2xl flex items-center justify-center border border-blue-500/30 shadow-[0_0_20px_rgba(59,130,246,0.2)] group-hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] transition-all">
-                                <i class="fas fa-play text-blue-300 text-3xl"></i>
-                            </div>
-                            <div class="badge text-green-300 bg-green-500/20 border border-green-500/30">v33.0 Publish</div>
-                        </div>
-                        <h3 class="text-3xl font-bold mb-4">Nest Stream</h3>
-                        <p class="text-gray-300 text-base mb-6 leading-relaxed">
-                            Platform Stream. Gratis Dan Tanpa Iklan Kami Selalu Memperhatikan Keinginan User Dan Juga Kenyamanan User.
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span class="text-xs px-3 py-1 rounded-full bg-blue-500/15 text-blue-300 border border-blue-500/20">Kotlin</span>
-                            <span class="text-xs px-3 py-1 rounded-full bg-blue-500/15 text-blue-300 border border-blue-500/20">Server</span>
-                            <span class="text-xs px-3 py-1 rounded-full bg-blue-500/15 text-blue-300 border border-blue-500/20">Java</span>
-                        </div>
-                    </div>
-                    <div class="flex gap-3 mt-6">
-                        <a href="https://www.mediafire.com/file/wzma2cj9waasi1n/Nest+Stream_33.0.apk/file" target="_blank" class="click-anim flex-1 py-3 text-center btn-primary rounded-xl hover:shadow-lg text-sm font-semibold uppercase tracking-wide transition-all">
-                            Download APK
-                        </a>
-                        <a href="https://vt.tiktok.com/ZSqA8ejhd/" target="_blank" class="click-anim px-6 py-3 flex items-center justify-center btn-secondary rounded-xl font-semibold text-white transition-all">
-                            <i class="fas fa-link"></i>
-                        </a>
-                    </div>
-                </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-                <div class="glass-card p-8 flex flex-col justify-between project-card group">
-                    <div>
-                        <div class="flex justify-between items-start mb-8">
-                            <div class="w-16 h-16 bg-gradient-to-br from-red-500/30 to-pink-500/20 rounded-2xl flex items-center justify-center border border-red-500/30 shadow-[0_0_20px_rgba(239,68,68,0.2)] group-hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all">
-                                <i class="fab fa-youtube text-red-300 text-3xl"></i>
+                <article class="project-card glass glass-hover rounded-3xl p-8 group" style="--project-glow: rgba(59,130,246,.18)">
+                    <div class="relative z-10 h-full flex flex-col">
+                        <div class="flex items-start justify-between gap-4">
+                            <div class="project-icon" style="color:#8db4ff; box-shadow:0 0 40px rgba(59,130,246,.15)">
+                                <i class="fas fa-play"></i>
                             </div>
-                            <div class="badge text-red-300 bg-red-500/20 border border-red-500/30">Offline</div>
+                            <div class="text-right">
+                                <div class="project-number">01 / 04</div>
+                                <span class="inline-flex mt-2 px-3 py-1.5 rounded-full text-[11px] font-bold text-green-300 bg-green-400/10 border border-green-400/20 tracking-wide">v34.0</span>
+                            </div>
                         </div>
-                        <h3 class="text-3xl font-bold mb-4">HM TUBE</h3>
-                        <p class="text-gray-300 text-base mb-6 leading-relaxed">
-                            Modified YouTube client with premium features and direct database access capabilities. Custom video player with quality selector, advanced playback controls, and optimized streaming for Indonesian users.
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span class="text-xs px-3 py-1 rounded-full bg-red-500/15 text-red-300 border border-red-500/20">Android</span>
-                            <span class="text-xs px-3 py-1 rounded-full bg-red-500/15 text-red-300 border border-red-500/20">Kotlin</span>
-                            <span class="text-xs px-3 py-1 rounded-full bg-red-500/15 text-red-300 border border-red-500/20">API</span>
+                        <div class="mt-8 flex-1">
+                            <h3 class="text-3xl font-extrabold">Nest Stream</h3>
+                            <p class="text-gray-400 text-sm leading-7 mt-5 font-medium">Aplikasi ini memiliki fitur utama berupa Film, Anime, dan Manhwa. Nest Stream yang ditampilkan di sini merupakan versi contoh dengan beberapa fitur yang sengaja dipangkas agar lebih ringan, optimal, dan fokus pada pengalaman penggunaan.</p>
+                            <div class="flex flex-wrap gap-2.5 mt-7">
+                                <span class="tag">Kotlin</span><span class="tag">Java</span><span class="tag">Server</span><span class="tag">Streaming</span>
+                            </div>
+                        </div>
+                        <div class="flex gap-3 mt-8">
+                            <a href="https://www.mediafire.com/file/mvuu8eqpll2izdp/Nest+Stream_34.0.apk/file" target="_blank" class="pressable project-link primary flex-1">Download APK <i class="fas fa-download"></i></a>
+                            <a href="https://vt.tiktok.com/ZS4Mvb25C/" target="_blank" class="pressable project-link secondary w-14 px-0 text-lg"><i class="fas fa-arrow-up-right-from-square"></i></a>
                         </div>
                     </div>
-                    <div class="flex gap-3 mt-6">
-                        <a href="https://www.mediafire.com/file/88xxt1p5uxm57iz/HM+TUBE_1.5.apk/file" target="_blank" class="click-anim flex-1 py-3 text-center btn-primary rounded-xl hover:shadow-lg text-sm font-semibold uppercase tracking-wide transition-all">
-                            Download APK
-                        </a>
-                        <a href="https://whatsapp.com/channel/0029VbD0iJL7IUYLc3KSrb0E" target="_blank" class="click-anim px-6 py-3 flex items-center justify-center btn-secondary rounded-xl font-semibold text-white transition-all">
-                            <i class="fas fa-link"></i>
-                        </a>
+                </article>
+
+                <article class="project-card glass glass-hover rounded-3xl p-8 group" style="--project-glow: rgba(168,85,247,.17)">
+                    <div class="relative z-10 h-full flex flex-col">
+                        <div class="flex items-start justify-between gap-4">
+                            <div class="project-icon" style="color:#c2a7ff; box-shadow:0 0 40px rgba(168,85,247,.15)">
+                                <i class="fas fa-music"></i>
+                            </div>
+                            <div class="text-right">
+                                <div class="project-number">02 / 04</div>
+                                <span class="inline-flex mt-2 px-3 py-1.5 rounded-full text-[11px] font-bold text-purple-300 bg-purple-400/10 border border-purple-400/20 tracking-wide">REBUILD</span>
+                            </div>
+                        </div>
+                        <div class="mt-8 flex-1">
+                            <h3 class="text-3xl font-extrabold">Nest Music</h3>
+                            <p class="text-gray-400 text-sm leading-7 mt-5 font-medium">Aplikasi musik yang dirancang untuk pengalaman mendengarkan yang sederhana, dengan fokus pada pencarian, pemutaran, koleksi, dan tampilan yang nyaman digunakan.</p>
+                            <div class="flex flex-wrap gap-2.5 mt-7">
+                                <span class="tag">Android</span><span class="tag">API</span><span class="tag">Music</span><span class="tag">UI/UX</span>
+                            </div>
+                        </div>
+                        <div class="flex gap-3 mt-8">
+                            <a href="https://www.mediafire.com/file/d5xzhwrifwrpwny/Nest-Music#Rebuild_opt_opt.apk/file" target="_blank" class="pressable project-link primary flex-1">Download APK <i class="fas fa-download"></i></a>
+                        </div>
                     </div>
-                </div>
+                </article>
+
+                <article class="project-card glass glass-hover rounded-3xl p-8 group" style="--project-glow: rgba(34,211,238,.16)">
+                    <div class="relative z-10 h-full flex flex-col">
+                        <div class="flex items-start justify-between gap-4">
+                            <div class="project-icon" style="color:#6ee7f7; box-shadow:0 0 40px rgba(34,211,238,.15)">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                            <div class="text-right">
+                                <div class="project-number">03 / 04</div>
+                                <span class="inline-flex mt-2 px-3 py-1.5 rounded-full text-[11px] font-bold text-cyan-300 bg-cyan-400/10 border border-cyan-400/20 tracking-wide">v1.0</span>
+                            </div>
+                        </div>
+                        <div class="mt-8 flex-1">
+                            <h3 class="text-3xl font-extrabold">Nest Comic</h3>
+                            <p class="text-gray-400 text-sm leading-7 mt-5 font-medium">Aplikasi membaca komik dan manga dengan fokus pada pencarian cepat, pengelolaan koleksi, data dari API, serta pengalaman membaca yang nyaman.</p>
+                            <div class="flex flex-wrap gap-2.5 mt-7">
+                                <span class="tag">REST API</span><span class="tag">Web</span><span class="tag">Reader</span><span class="tag">Streaming</span>
+                            </div>
+                        </div>
+                        <div class="flex gap-3 mt-8">
+                            <a href="https://www.mediafire.com/file/0bz5ys02eo56p27/Nest+Comic_1.0_Rebuild.apk/file" target="_blank" class="pressable project-link primary flex-1">Download APK <i class="fas fa-download"></i></a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="project-card glass glass-hover rounded-3xl p-8 group" style="--project-glow: rgba(239,68,68,.17)">
+                    <div class="relative z-10 h-full flex flex-col">
+                        <div class="flex items-start justify-between gap-4">
+                            <div class="project-icon" style="color:#ff8c8c; box-shadow:0 0 40px rgba(239,68,68,.15)">
+                                <i class="fab fa-youtube"></i>
+                            </div>
+                            <div class="text-right">
+                                <div class="project-number">04 / 04</div>
+                                <span class="inline-flex mt-2 px-3 py-1.5 rounded-full text-[11px] font-bold text-red-300 bg-red-400/10 border border-red-400/20 tracking-wide">OFFLINE</span>
+                            </div>
+                        </div>
+                        <div class="mt-8 flex-1">
+                            <h3 class="text-3xl font-extrabold">HM TUBE</h3>
+                            <p class="text-gray-400 text-sm leading-7 mt-5 font-medium">Eksperimen aplikasi Android untuk menonton video dengan tampilan dan kontrol pemutaran yang dibuat lebih sesuai dengan kebutuhan penggunaan mobile.</p>
+                            <div class="flex flex-wrap gap-2.5 mt-7">
+                                <span class="tag">Android</span><span class="tag">Kotlin</span><span class="tag">API</span><span class="tag">Player</span>
+                            </div>
+                        </div>
+                        <div class="flex gap-3 mt-8">
+                            <a href="https://www.mediafire.com/file/88xxt1p5uxm57iz/HM+TUBE_1.5.apk/file" target="_blank" class="pressable project-link primary flex-1">Download APK <i class="fas fa-download"></i></a>
+                            <a href="https://whatsapp.com/channel/0029VbDQhK9GufIwKphQYn1v" target="_blank" class="pressable project-link secondary w-14 px-0 text-lg"><i class="fab fa-whatsapp text-green-400"></i></a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="footer-line mt-16"></div>
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 text-sm text-gray-500 font-medium">
+                <span>Selected projects · HM MODZ TEAM</span>
+                <span>Designed & built with curiosity.</span>
             </div>
         </section>
 
         <section id="tech" class="tab-content">
-            <div class="text-center mb-16">
-                <h2 class="text-5xl font-bold mb-3 gradient-text">Tech Arsenal</h2>
-                <p class="text-gray-400 text-base max-w-xl mx-auto">Technologies and tools powering HM MODZ projects across web, mobile, and backend development.</p>
+            <div class="max-w-3xl mb-14">
+                <div class="eyebrow mb-6"><span class="status-dot"></span> Teknologi</div>
+                <h2 class="text-6xl font-extrabold tracking-tight">
+                    Teknologi yang <span class="gradient-text">aku gunakan.</span>
+                </h2>
+                <p class="text-gray-400 text-base leading-8 mt-6 font-medium">
+                    Beberapa teknologi yang digunakan untuk mengembangkan aplikasi Android, web,
+                    backend, otomasi, reverse engineering, dan project lainnya.
+                </p>
             </div>
 
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                <div class="glass-card click-anim p-6 flex flex-col items-center justify-center text-center group">
-                    <div class="tech-icon">
-                        <i class="fab fa-android text-5xl text-green-400 drop-shadow-[0_0_12px_rgba(74,222,128,0.4)]"></i>
-                    </div>
-                    <h4 class="font-bold mt-4 text-white">Android Dev</h4>
-                    <p class="text-xs text-gray-400 mt-2">Java / Kotlin</p>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
+                
+                <div class="tech-card glass glass-hover rounded-3xl p-7 text-center pressable">
+                    <div class="tech-icon"><i class="fab fa-php text-5xl text-indigo-400"></i></div>
+                    <h4 class="font-bold text-lg mt-6 text-white">PHP</h4>
+                    <p class="text-xs text-gray-400 mt-2 font-medium">Backend / Web</p>
                 </div>
+                
+                <div class="tech-card glass glass-hover rounded-3xl p-7 text-center pressable">
+                    <div class="tech-icon"><i class="fas fa-file-code text-5xl text-blue-500"></i></div>
+                    <h4 class="font-bold text-lg mt-6 text-white">C++</h4>
+                    <p class="text-xs text-gray-400 mt-2 font-medium">Native / System</p>
+                </div>
+                
+                <div class="tech-card glass glass-hover rounded-3xl p-7 text-center pressable">
+                    <div class="tech-icon"><i class="fab fa-java text-5xl text-red-500"></i></div>
+                    <h4 class="font-bold text-lg mt-6 text-white">Java</h4>
+                    <p class="text-xs text-gray-400 mt-2 font-medium">App / System</p>
+                </div>
+                
+                <div class="tech-card glass glass-hover rounded-3xl p-7 text-center pressable">
+                    <div class="tech-icon"><i class="fab fa-android text-5xl text-green-400"></i></div>
+                    <h4 class="font-bold text-lg mt-6 text-white">Kotlin</h4>
+                    <p class="text-xs text-gray-400 mt-2 font-medium">Android Dev</p>
+                </div>
+                
+                <div class="tech-card glass glass-hover rounded-3xl p-7 text-center pressable">
+                    <div class="tech-icon"><i class="fas fa-layer-group text-5xl text-blue-300"></i></div>
+                    <h4 class="font-bold text-lg mt-6 text-white">Jet Compose</h4>
+                    <p class="text-xs text-gray-400 mt-2 font-medium">Modern UI</p>
+                </div>
+                
+                <div class="tech-card glass glass-hover rounded-3xl p-7 text-center pressable">
+                    <div class="tech-icon"><i class="fas fa-database text-5xl text-pink-400"></i></div>
+                    <h4 class="font-bold text-lg mt-6 text-white">Database</h4>
+                    <p class="text-xs text-gray-400 mt-2 font-medium">SQL / NoSQL</p>
+                </div>
+                
+                <div class="tech-card glass glass-hover rounded-3xl p-7 text-center pressable">
+                    <div class="tech-icon"><i class="fas fa-server text-5xl text-gray-400"></i></div>
+                    <h4 class="font-bold text-lg mt-6 text-white">Homelab</h4>
+                    <p class="text-xs text-gray-400 mt-2 font-medium">Self-hosted</p>
+                </div>
+                
+                <div class="tech-card glass glass-hover rounded-3xl p-7 text-center pressable">
+                    <div class="tech-icon"><i class="fas fa-bug text-5xl text-cyan-400"></i></div>
+                    <h4 class="font-bold text-lg mt-6 text-white">Reverse Eng.</h4>
+                    <p class="text-xs text-gray-400 mt-2 font-medium">Analysis / Mod</p>
+                </div>
+                
+                <div class="tech-card glass glass-hover rounded-3xl p-7 text-center pressable">
+                    <div class="tech-icon"><i class="fas fa-shield-halved text-5xl text-orange-400"></i></div>
+                    <h4 class="font-bold text-lg mt-6 text-white">Cyber Security</h4>
+                    <p class="text-xs text-gray-400 mt-2 font-medium">PenTesting</p>
+                </div>
+                
+            </div>
 
-                <div class="glass-card click-anim p-6 flex flex-col items-center justify-center text-center group">
-                    <div class="tech-icon">
-                        <i class="fab fa-js-square text-5xl text-yellow-400 drop-shadow-[0_0_12px_rgba(250,204,21,0.4)]"></i>
-                    </div>
-                    <h4 class="font-bold mt-4 text-white">JavaScript</h4>
-                    <p class="text-xs text-gray-400 mt-2">Vanilla / Node.js</p>
+            <div class="glass rounded-3xl p-8 mt-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8 border border-blue-500/20" style="background: linear-gradient(145deg, rgba(59,130,246,0.08), rgba(0,0,0,0));">
+                <div>
+                    <div class="text-xs uppercase tracking-[.2em] text-blue-400 font-bold">Arah saat ini</div>
+                    <h3 class="text-2xl font-extrabold mt-3 text-white">Membangun sesuatu yang berguna dengan interface yang bersih.</h3>
+                    <p class="text-base text-gray-400 mt-3 max-w-2xl font-medium leading-7">Mulai dari aplikasi mobile sampai project streaming, fokusnya tetap pada produk yang praktis dan pengalaman penggunaan yang nyaman.</p>
                 </div>
-
-                <div class="glass-card click-anim p-6 flex flex-col items-center justify-center text-center group">
-                    <div class="tech-icon">
-                        <i class="fab fa-python text-5xl text-blue-400 drop-shadow-[0_0_12px_rgba(59,130,246,0.4)]"></i>
-                    </div>
-                    <h4 class="font-bold mt-4 text-white">Python</h4>
-                    <p class="text-xs text-gray-400 mt-2">Scripts / Tools</p>
-                </div>
-
-                <div class="glass-card click-anim p-6 flex flex-col items-center justify-center text-center group">
-                    <div class="tech-icon">
-                        <i class="fas fa-code-branch text-5xl text-purple-400 drop-shadow-[0_0_12px_rgba(168,85,247,0.4)]"></i>
-                    </div>
-                    <h4 class="font-bold mt-4 text-white">Git / Vercel</h4>
-                    <p class="text-xs text-gray-400 mt-2">Deployment</p>
-                </div>
-
-                <div class="glass-card click-anim p-6 flex flex-col items-center justify-center text-center group">
-                    <div class="tech-icon">
-                        <i class="fas fa-database text-5xl text-pink-400 drop-shadow-[0_0_12px_rgba(236,72,153,0.4)]"></i>
-                    </div>
-                    <h4 class="font-bold mt-4 text-white">Firebase</h4>
-                    <p class="text-xs text-gray-400 mt-2">Realtime DB</p>
-                </div>
-
-                <div class="glass-card click-anim p-6 flex flex-col items-center justify-center text-center group">
-                    <div class="tech-icon">
-                        <i class="fas fa-lock text-5xl text-orange-400 drop-shadow-[0_0_12px_rgba(249,115,22,0.4)]"></i>
-                    </div>
-                    <h4 class="font-bold mt-4 text-white">Cybersecurity</h4>
-                    <p class="text-xs text-gray-400 mt-2">Penetration Testing</p>
-                </div>
-
-                <div class="glass-card click-anim p-6 flex flex-col items-center justify-center text-center group">
-                    <div class="tech-icon">
-                        <i class="fas fa-bug text-5xl text-cyan-400 drop-shadow-[0_0_12px_rgba(34,211,238,0.4)]"></i>
-                    </div>
-                    <h4 class="font-bold mt-4 text-white">Reverse Eng.</h4>
-                    <p class="text-xs text-gray-400 mt-2">Frida / Linux</p>
-                </div>
-
-                <div class="glass-card click-anim p-6 flex flex-col items-center justify-center text-center group">
-                    <div class="tech-icon">
-                        <i class="fas fa-server text-5xl text-indigo-400 drop-shadow-[0_0_12px_rgba(99,102,241,0.4)]"></i>
-                    </div>
-                    <h4 class="font-bold mt-4 text-white">API / Backend</h4>
-                    <p class="text-xs text-gray-400 mt-2">REST / Express</p>
-                </div>
+                <button onclick="openTab('projects')" class="pressable project-link primary whitespace-nowrap px-8">Lihat Project <i class="fas fa-arrow-right"></i></button>
             </div>
         </section>
     </main>
 
     <div class="fixed bottom-6 right-6 z-50">
-        <button class="click-anim w-14 h-14 glass-card flex items-center justify-center cursor-pointer hover:bg-white/20 transition-all text-white font-semibold" onclick="toggleMusic()" title="Toggle Music">
-            <i id="music-icon" class="fas fa-play text-lg"></i>
-        </button>
+        <div class="relative">
+            <div class="music-ring"></div>
+            <button class="music-button glass pressable click-anim" onclick="toggleMusic()" title="Toggle Music" aria-label="Toggle Music">
+                <i id="music-icon" class="fas fa-play text-lg"></i>
+            </button>
+        </div>
         <audio id="myAudio" loop>
             <source src="sta.mp3" type="audio/mpeg">
         </audio>
     </div>
 
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const textToType = "Welcome To Nest Stream";
-            const typedTextElement = document.getElementById("typed-text");
+            const text = "Menyiapkan portofolio HM MODZ TEAM...";
+            const typed = document.getElementById("typed-text");
             const loader = document.getElementById("loader");
             let index = 0;
 
             function typeText() {
-                if (index < textToType.length) {
-                    typedTextElement.textContent += textToType.charAt(index);
-                    index++;
-                    const typingSpeed = Math.floor(Math.random() * (100 - 50 + 1)) + 50;
-                    setTimeout(typeText, typingSpeed);
+                if (index < text.length) {
+                    typed.textContent += text.charAt(index++);
+                    setTimeout(typeText, 30);
                 } else {
                     setTimeout(() => {
                         loader.classList.add("hidden");
                         document.body.classList.remove("loading");
-                        setTimeout(() => {
-                            loader.remove();
-                        }, 800);
-                    }, 1200);
+                        setTimeout(() => loader.remove(), 800);
+                    }, 600);
                 }
             }
 
-            setTimeout(typeText, 400);
+            setTimeout(typeText, 200);
+            setupInteractions();
         });
 
         function openTab(tabName) {
-            const tabs = document.querySelectorAll('.tab-content');
-            tabs.forEach(tab => {
-                tab.classList.remove('active');
-                tab.style.animation = 'none';
-                tab.offsetHeight;
+            document.querySelectorAll(".tab-content").forEach(tab => {
+                tab.classList.remove("active");
+                tab.style.animation = "none";
             });
 
-            const btns = document.querySelectorAll('.tab-btn');
-            btns.forEach(btn => {
-                btn.className = "tab-btn click-anim px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 text-gray-300 hover:text-white border border-transparent hover:border-white/10";
+            document.querySelectorAll(".tab-btn").forEach(btn => {
+                btn.className = "tab-btn pressable click-anim px-6 py-2.5 rounded-full text-sm font-bold text-gray-400 hover:text-white transition-colors";
             });
 
             const activeTab = document.getElementById(tabName);
-            activeTab.classList.add('active');
-            activeTab.style.animation = 'fadeUp 0.5s ease-out forwards';
+            const activeBtn = document.getElementById("btn-" + tabName);
 
-            const activeBtn = document.getElementById('btn-' + tabName);
-            activeBtn.className = "tab-btn click-anim px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 bg-blue-500/25 text-blue-300 border border-blue-500/30";
+            activeTab.classList.add("active");
+            activeTab.style.animation = "pageIn .6s cubic-bezier(.2,.8,.2,1) both";
+            activeBtn.className = "tab-btn pressable click-anim px-6 py-2.5 rounded-full text-sm font-bold bg-white/10 text-white border border-white/15 shadow-[0_0_15px_rgba(255,255,255,0.05)]";
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 40);
         }
 
         const audio = document.getElementById("myAudio");
         const icon = document.getElementById("music-icon");
 
         function toggleMusic() {
+            const button = document.querySelector(".music-button");
+            button.classList.add("click-feedback");
+            setTimeout(() => button.classList.remove("click-feedback"), 450);
+
             if (audio.paused) {
-                audio.play();
-                icon.className = "fas fa-pause text-lg";
+                audio.play().then(() => {
+                    icon.className = "fas fa-pause text-lg";
+                    showToast("Musik latar dinyalakan.");
+                }).catch(() => {
+                    icon.className = "fas fa-play text-lg";
+                    showToast("Musik belum dapat diputar. Coba tekan lagi.");
+                });
             } else {
                 audio.pause();
                 icon.className = "fas fa-play text-lg";
+                showToast("Musik latar dijeda.");
             }
         }
 
-        // Prevent context menu on images
-        document.addEventListener('contextmenu', (e) => {
-            if (e.target.tagName === 'IMG') {
-                e.preventDefault();
-            }
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            toast.textContent = message;
+            toast.classList.add("show");
+            clearTimeout(window.toastTimer);
+            window.toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
+        }
+
+        function createRipple(event, element) {
+            const rect = element.getBoundingClientRect();
+            const point = event.touches ? event.touches[0] : event;
+            const size = Math.max(rect.width, rect.height) * .8;
+            const ripple = document.createElement("span");
+            ripple.className = "ripple";
+            ripple.style.width = size + "px";
+            ripple.style.height = size + "px";
+            ripple.style.left = ((point.clientX || rect.left + rect.width / 2) - rect.left - size / 2) + "px";
+            ripple.style.top = ((point.clientY || rect.top + rect.height / 2) - rect.top - size / 2) + "px";
+            element.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+        }
+
+        function setupInteractions() {
+            document.querySelectorAll(".pressable").forEach(element => {
+                element.addEventListener("pointerdown", event => {
+                    element.classList.add("is-pressed");
+                    createRipple(event, element);
+                });
+
+                ["pointerup", "pointercancel", "pointerleave"].forEach(type => {
+                    element.addEventListener(type, () => element.classList.remove("is-pressed"));
+                });
+            });
+
+            document.querySelectorAll(".project-card").forEach(card => {
+                card.addEventListener("click", event => {
+                    if (event.target.closest("a, button")) return;
+
+                    document.querySelectorAll(".project-card").forEach(item => {
+                        if (item !== card) item.classList.remove("is-selected");
+                    });
+
+                    card.classList.toggle("is-selected");
+                    card.classList.remove("click-feedback");
+                    void card.offsetWidth;
+                    card.classList.add("click-feedback");
+
+                    const title = card.querySelector("h3")?.textContent || "Project";
+                    showToast(card.classList.contains("is-selected")
+                        ? title + " dipilih. Buka tautan di dalam card."
+                        : title + " ditutup.");
+                });
+            });
+
+            document.querySelectorAll(".tech-card").forEach(card => {
+                card.addEventListener("click", () => {
+                    document.querySelectorAll(".tech-card").forEach(item => {
+                        if (item !== card) item.classList.remove("is-selected");
+                    });
+
+                    card.classList.toggle("is-selected");
+                    const title = card.querySelector("h4")?.textContent || "Teknologi";
+                    showToast(card.classList.contains("is-selected") ? title + " dipilih." : title + " ditutup.");
+                });
+            });
+
+            document.querySelectorAll(".project-link, .tab-btn").forEach(element => {
+                element.addEventListener("click", () => {
+                    element.classList.remove("click-feedback");
+                    void element.offsetWidth;
+                    element.classList.add("click-feedback");
+                    setTimeout(() => element.classList.remove("click-feedback"), 450);
+                });
+            });
+        }
+
+        document.addEventListener("contextmenu", event => {
+            if (event.target.tagName === "IMG" || event.target.tagName === "VIDEO") event.preventDefault();
         });
     </script>
 </body>
