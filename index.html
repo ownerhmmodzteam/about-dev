@@ -22,7 +22,7 @@
             --blue: #5b8cff;
             --cyan: #37d9ff;
             --green: #42e8a0;
-            --blur: blur(28px);
+            --blur: blur(12px); /* OPTIMASI: Dikurangi dari 28px agar lebih ringan di HP */
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -72,8 +72,10 @@
             min-width: 300px;
             min-height: 300px;
             border-radius: 999px;
-            filter: blur(110px);
+            filter: blur(70px); /* OPTIMASI: Dikurangi dari 110px agar FPS tidak drop */
             opacity: .12;
+            will-change: transform; /* Akselerasi Hardware */
+            transform: translateZ(0);
         }
 
         .ambient::before {
@@ -114,12 +116,8 @@
         }
 
         .noise {
-            position: fixed;
-            inset: 0;
-            z-index: 2;
-            pointer-events: none;
-            opacity: .04;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.65'/%3E%3C/svg%3E");
+            /* OPTIMASI: SVG Noise dimatikan karena sangat berat memakan CPU & RAM HP */
+            display: none; 
         }
 
         .glass {
@@ -128,10 +126,12 @@
             box-shadow: 0 25px 80px rgba(0,0,0,.25), inset 0 1px rgba(255,255,255,.05);
             backdrop-filter: var(--blur);
             -webkit-backdrop-filter: var(--blur);
+            transform: translateZ(0); /* Akselerasi Hardware GPU */
+            will-change: transform, box-shadow;
         }
 
         .glass-hover {
-            transition: transform .4s cubic-bezier(.2,.8,.2,1), border-color .4s ease, background .4s ease, box-shadow .4s ease;
+            transition: transform .3s cubic-bezier(.2,.8,.2,1), border-color .3s ease, background .3s ease, box-shadow .3s ease;
         }
 
         .glass-hover:hover {
@@ -310,10 +310,12 @@
             filter: blur(20px);
         }
 
+        /* PROJECT CARD EFEK INTERAKTIF */
         .project-card {
             position: relative;
             overflow: hidden;
             min-height: 440px;
+            cursor: pointer; /* Menandakan bisa diklik */
         }
 
         .project-card::before {
@@ -328,6 +330,15 @@
 
         .project-card:hover::before {
             opacity: 1;
+        }
+        
+        /* Efek ditekan/diklik pada Project Card */
+        .project-card:active,
+        .project-card.is-pressed {
+            transform: scale(0.96) translateY(0) !important;
+            border-color: rgba(91,140,255,0.6) !important;
+            box-shadow: 0 0 35px rgba(91,140,255,0.25), inset 0 0 20px rgba(255,255,255,0.05) !important;
+            transition: all 0.15s ease-out !important;
         }
 
         .project-number {
@@ -670,8 +681,10 @@
     <div class="ambient"></div>
     <div class="noise"></div>
 
+    <!-- Menambahkan Tab Journey -->
     <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 glass rounded-full px-2 py-2 flex gap-1 w-auto justify-center">
         <button onclick="openTab('home')" id="btn-home" class="tab-btn pressable click-anim px-6 py-2.5 rounded-full text-sm font-bold bg-white/10 text-white border border-white/10">Home</button>
+        <button onclick="openTab('journey')" id="btn-journey" class="tab-btn pressable click-anim px-6 py-2.5 rounded-full text-sm font-bold text-gray-400 hover:text-white">Journey</button>
         <button onclick="openTab('projects')" id="btn-projects" class="tab-btn pressable click-anim px-6 py-2.5 rounded-full text-sm font-bold text-gray-400 hover:text-white">Projects</button>
         <button onclick="openTab('tech')" id="btn-tech" class="tab-btn pressable click-anim px-6 py-2.5 rounded-full text-sm font-bold text-gray-400 hover:text-white">Tech</button>
     </nav>
@@ -728,6 +741,75 @@
             </div>
         </section>
 
+        <!-- BAGIAN JOURNEY (KEMBALI DITAMBAHKAN) -->
+        <section id="journey" class="tab-content">
+            <div class="max-w-3xl mb-14">
+                <div class="eyebrow mb-6"><span class="status-dot"></span> Perjalanan</div>
+                <h2 class="text-6xl font-extrabold tracking-tight">
+                    Jejak Langkah <span class="gradient-text">HM MODZ.</span>
+                </h2>
+                <p class="text-gray-400 text-base leading-8 mt-6 font-medium">
+                    Bukan perjalanan yang selalu sempurna, tetapi setiap perubahan menjadi bagian dari bagaimana kami terus berkembang.
+                </p>
+            </div>
+
+            <div class="relative border-l border-white/10 ml-4 md:ml-6 space-y-10 pb-8">
+                <div class="relative pl-8 md:pl-12 group">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-blue-500 border-[3px] border-[#030508] shadow-[0_0_15px_rgba(59,130,246,0.6)] transition-transform duration-300 group-hover:scale-125"></div>
+                    <div class="glass glass-hover rounded-3xl p-6 md:p-8">
+                        <div class="text-sm font-bold text-blue-400 tracking-wider mb-2">2015 — 2016</div>
+                        <h3 class="text-2xl font-extrabold text-white mb-3">Titik Awal</h3>
+                        <p class="text-gray-400 text-sm leading-7 font-medium">Awal mula lahirnya nama HM MODZ. Fase ini menjadi langkah pertama masuk ke dunia teknologi dengan penuh rasa penasaran.</p>
+                    </div>
+                </div>
+
+                <div class="relative pl-8 md:pl-12 group">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-red-500 border-[3px] border-[#030508] shadow-[0_0_15px_rgba(239,68,68,0.6)] transition-transform duration-300 group-hover:scale-125"></div>
+                    <div class="glass glass-hover rounded-3xl p-6 md:p-8">
+                        <div class="text-sm font-bold text-red-400 tracking-wider mb-2">2016 — 2018</div>
+                        <h3 class="text-2xl font-extrabold text-white mb-3">Fase Gelap</h3>
+                        <p class="text-gray-400 text-sm leading-7 font-medium">Eksplorasi menembus batas hingga merusak sistem keamanan. Hal ini berujung pada diamankannya HM MODZ oleh lembaga terkait, yang membuat pergerakan ditutup dan disembunyikan.</p>
+                    </div>
+                </div>
+
+                <div class="relative pl-8 md:pl-12 group">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-cyan-400 border-[3px] border-[#030508] shadow-[0_0_15px_rgba(34,211,238,0.6)] transition-transform duration-300 group-hover:scale-125"></div>
+                    <div class="glass glass-hover rounded-3xl p-6 md:p-8">
+                        <div class="text-sm font-bold text-cyan-400 tracking-wider mb-2">2019 — 2020</div>
+                        <h3 class="text-2xl font-extrabold text-white mb-3">Kebangkitan & Inovasi</h3>
+                        <p class="text-gray-400 text-sm leading-7 font-medium">HM MODZ lahir kembali dengan inovasi berbeda. Energi diarahkan untuk merintis platform aplikasi streaming yang berawalan dari nama "HM MODZ Stream".</p>
+                    </div>
+                </div>
+
+                <div class="relative pl-8 md:pl-12 group">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-orange-400 border-[3px] border-[#030508] shadow-[0_0_15px_rgba(251,146,60,0.6)] transition-transform duration-300 group-hover:scale-125"></div>
+                    <div class="glass glass-hover rounded-3xl p-6 md:p-8">
+                        <div class="text-sm font-bold text-orange-400 tracking-wider mb-2">2020 — 2023</div>
+                        <h3 class="text-2xl font-extrabold text-white mb-3">Ujian Bertahan</h3>
+                        <p class="text-gray-400 text-sm leading-7 font-medium">Perjalanan panjang yang sangat menyakitkan. Tim dari HM MODZ bubar dan berguguran, hingga hanya menyisakan dua orang yang terus mencoba bertahan.</p>
+                    </div>
+                </div>
+
+                <div class="relative pl-8 md:pl-12 group">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-purple-400 border-[3px] border-[#030508] shadow-[0_0_15px_rgba(192,132,252,0.6)] transition-transform duration-300 group-hover:scale-125"></div>
+                    <div class="glass glass-hover rounded-3xl p-6 md:p-8">
+                        <div class="text-sm font-bold text-purple-400 tracking-wider mb-2">2024 — 2025</div>
+                        <h3 class="text-2xl font-extrabold text-white mb-3">Transformasi & Kehilangan</h3>
+                        <p class="text-gray-400 text-sm leading-7 font-medium">Nama aplikasi berubah menjadi <strong>Nest Stream</strong>. Namun, ada hal yang sangat menyakitkan: kehilangan kedua tim yang tersisa akibat kecelakaan dan penyakit.</p>
+                    </div>
+                </div>
+
+                <div class="relative pl-8 md:pl-12 group">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-gray-400 border-[3px] border-[#030508] shadow-[0_0_15px_rgba(156,163,175,0.6)] transition-transform duration-300 group-hover:scale-125"></div>
+                    <div class="glass glass-hover rounded-3xl p-6 md:p-8">
+                        <div class="text-sm font-bold text-gray-400 tracking-wider mb-2">2025 — 2026</div>
+                        <h3 class="text-2xl font-extrabold text-white mb-3">Titik Jenuh</h3>
+                        <p class="text-gray-400 text-sm leading-7 font-medium">Perjalanan penuh kejenuhan dan kebosanan. Duka yang tertinggal menghancurkan gairah untuk membuat karya baru, membuat ruang inovasi terasa kosong.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="projects" class="tab-content">
             <div class="max-w-3xl mb-14">
                 <div class="eyebrow mb-6"><span class="status-dot"></span> Project pilihan</div>
@@ -742,9 +824,10 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-                <article class="project-card glass glass-hover rounded-3xl p-8 group" style="--project-glow: rgba(59,130,246,.18)">
-                    <div class="relative z-10 h-full flex flex-col">
-                        <div class="flex items-start justify-between gap-4">
+                <!-- Menambahkan class pressable agar efek ripple dan glow pada klik aktif -->
+                <article class="project-card glass glass-hover rounded-3xl p-8 group pressable" style="--project-glow: rgba(59,130,246,.18)">
+                    <div class="relative z-10 h-full flex flex-col pointer-events-none">
+                        <div class="flex items-start justify-between gap-4 pointer-events-auto">
                             <div class="project-icon" style="color:#8db4ff; box-shadow:0 0 40px rgba(59,130,246,.15)">
                                 <i class="fas fa-play"></i>
                             </div>
@@ -753,23 +836,23 @@
                                 <span class="inline-flex mt-2 px-3 py-1.5 rounded-full text-[11px] font-bold text-green-300 bg-green-400/10 border border-green-400/20 tracking-wide">v34.0</span>
                             </div>
                         </div>
-                        <div class="mt-8 flex-1">
+                        <div class="mt-8 flex-1 pointer-events-auto">
                             <h3 class="text-3xl font-extrabold">Nest Stream</h3>
                             <p class="text-gray-400 text-sm leading-7 mt-5 font-medium">Aplikasi ini memiliki fitur utama berupa Film, Anime, dan Manhwa. Nest Stream yang ditampilkan di sini merupakan versi contoh dengan beberapa fitur yang sengaja dipangkas agar lebih ringan, optimal, dan fokus pada pengalaman penggunaan.</p>
                             <div class="flex flex-wrap gap-2.5 mt-7">
                                 <span class="tag">Kotlin</span><span class="tag">Java</span><span class="tag">Server</span><span class="tag">Streaming</span>
                             </div>
                         </div>
-                        <div class="flex gap-3 mt-8">
+                        <div class="flex gap-3 mt-8 pointer-events-auto">
                             <a href="https://www.mediafire.com/file/mvuu8eqpll2izdp/Nest+Stream_34.0.apk/file" target="_blank" class="pressable project-link primary flex-1">Download APK <i class="fas fa-download"></i></a>
                             <a href="https://vt.tiktok.com/ZS4Mvb25C/" target="_blank" class="pressable project-link secondary w-14 px-0 text-lg"><i class="fas fa-arrow-up-right-from-square"></i></a>
                         </div>
                     </div>
                 </article>
 
-                <article class="project-card glass glass-hover rounded-3xl p-8 group" style="--project-glow: rgba(168,85,247,.17)">
-                    <div class="relative z-10 h-full flex flex-col">
-                        <div class="flex items-start justify-between gap-4">
+                <article class="project-card glass glass-hover rounded-3xl p-8 group pressable" style="--project-glow: rgba(168,85,247,.17)">
+                    <div class="relative z-10 h-full flex flex-col pointer-events-none">
+                        <div class="flex items-start justify-between gap-4 pointer-events-auto">
                             <div class="project-icon" style="color:#c2a7ff; box-shadow:0 0 40px rgba(168,85,247,.15)">
                                 <i class="fas fa-music"></i>
                             </div>
@@ -778,22 +861,22 @@
                                 <span class="inline-flex mt-2 px-3 py-1.5 rounded-full text-[11px] font-bold text-purple-300 bg-purple-400/10 border border-purple-400/20 tracking-wide">REBUILD</span>
                             </div>
                         </div>
-                        <div class="mt-8 flex-1">
+                        <div class="mt-8 flex-1 pointer-events-auto">
                             <h3 class="text-3xl font-extrabold">Nest Music</h3>
                             <p class="text-gray-400 text-sm leading-7 mt-5 font-medium">Aplikasi musik yang dirancang untuk pengalaman mendengarkan yang sederhana, dengan fokus pada pencarian, pemutaran, koleksi, dan tampilan yang nyaman digunakan.</p>
                             <div class="flex flex-wrap gap-2.5 mt-7">
                                 <span class="tag">Android</span><span class="tag">API</span><span class="tag">Music</span><span class="tag">UI/UX</span>
                             </div>
                         </div>
-                        <div class="flex gap-3 mt-8">
+                        <div class="flex gap-3 mt-8 pointer-events-auto">
                             <a href="https://www.mediafire.com/file/d5xzhwrifwrpwny/Nest-Music#Rebuild_opt_opt.apk/file" target="_blank" class="pressable project-link primary flex-1">Download APK <i class="fas fa-download"></i></a>
                         </div>
                     </div>
                 </article>
 
-                <article class="project-card glass glass-hover rounded-3xl p-8 group" style="--project-glow: rgba(34,211,238,.16)">
-                    <div class="relative z-10 h-full flex flex-col">
-                        <div class="flex items-start justify-between gap-4">
+                <article class="project-card glass glass-hover rounded-3xl p-8 group pressable" style="--project-glow: rgba(34,211,238,.16)">
+                    <div class="relative z-10 h-full flex flex-col pointer-events-none">
+                        <div class="flex items-start justify-between gap-4 pointer-events-auto">
                             <div class="project-icon" style="color:#6ee7f7; box-shadow:0 0 40px rgba(34,211,238,.15)">
                                 <i class="fas fa-book-open"></i>
                             </div>
@@ -802,22 +885,22 @@
                                 <span class="inline-flex mt-2 px-3 py-1.5 rounded-full text-[11px] font-bold text-cyan-300 bg-cyan-400/10 border border-cyan-400/20 tracking-wide">v1.0</span>
                             </div>
                         </div>
-                        <div class="mt-8 flex-1">
+                        <div class="mt-8 flex-1 pointer-events-auto">
                             <h3 class="text-3xl font-extrabold">Nest Comic</h3>
                             <p class="text-gray-400 text-sm leading-7 mt-5 font-medium">Aplikasi membaca komik dan manga dengan fokus pada pencarian cepat, pengelolaan koleksi, data dari API, serta pengalaman membaca yang nyaman.</p>
                             <div class="flex flex-wrap gap-2.5 mt-7">
                                 <span class="tag">REST API</span><span class="tag">Web</span><span class="tag">Reader</span><span class="tag">Streaming</span>
                             </div>
                         </div>
-                        <div class="flex gap-3 mt-8">
+                        <div class="flex gap-3 mt-8 pointer-events-auto">
                             <a href="https://www.mediafire.com/file/0bz5ys02eo56p27/Nest+Comic_1.0_Rebuild.apk/file" target="_blank" class="pressable project-link primary flex-1">Download APK <i class="fas fa-download"></i></a>
                         </div>
                     </div>
                 </article>
                 
-                   <article class="project-card glass glass-hover rounded-3xl p-8 group" style="--project-glow: rgba(168,85,247,.17)">
-                    <div class="relative z-10 h-full flex flex-col">
-                        <div class="flex items-start justify-between gap-4">
+                <article class="project-card glass glass-hover rounded-3xl p-8 group pressable" style="--project-glow: rgba(168,85,247,.17)">
+                    <div class="relative z-10 h-full flex flex-col pointer-events-none">
+                        <div class="flex items-start justify-between gap-4 pointer-events-auto">
                             <div class="project-icon" style="color:#c2a7ff; box-shadow:0 0 40px rgba(168,85,247,.15)">
                                 <i class="fas fa-code"></i>
                             </div>
@@ -826,22 +909,22 @@
                                 <span class="inline-flex mt-2 px-3 py-1.5 rounded-full text-[11px] font-bold text-purple-300 bg-purple-400/10 border border-purple-400/20 tracking-wide">BETA</span>
                             </div>
                         </div>
-                        <div class="mt-8 flex-1">
+                        <div class="mt-8 flex-1 pointer-events-auto">
                             <h3 class="text-3xl font-extrabold">Droid-Up Dex</h3>
                             <p class="text-gray-400 text-sm leading-7 mt-5 font-medium">Aplikasi Mirroring Mirip Samsung Dex Support All Device, Berjalan Di Atas USB Debug Dan Wireless USB Via Opsi Pengembang, Aplikasi Ini Tahap Pertama.</p>
                             <div class="flex flex-wrap gap-2.5 mt-7">
                                 <span class="tag">Android</span><span class="tag">Windows</span><span class="tag">Music</span><span class="tag">UI/UX</span>
                             </div>
                         </div>
-                        <div class="flex gap-3 mt-8">
+                        <div class="flex gap-3 mt-8 pointer-events-auto">
                             <a href="https://www.mediafire.com/file/yox8l83rqzzp5ws/DroidUP-Dex-v1.6-win-x64.zip/file" target="_blank" class="pressable project-link primary flex-1">Download File <i class="fas fa-download"></i></a>
                         </div>
                     </div>
                 </article>
 
-                <article class="project-card glass glass-hover rounded-3xl p-8 group" style="--project-glow: rgba(239,68,68,.17)">
-                    <div class="relative z-10 h-full flex flex-col">
-                        <div class="flex items-start justify-between gap-4">
+                <article class="project-card glass glass-hover rounded-3xl p-8 group pressable" style="--project-glow: rgba(239,68,68,.17)">
+                    <div class="relative z-10 h-full flex flex-col pointer-events-none">
+                        <div class="flex items-start justify-between gap-4 pointer-events-auto">
                             <div class="project-icon" style="color:#ff8c8c; box-shadow:0 0 40px rgba(239,68,68,.15)">
                                 <i class="fab fa-youtube"></i>
                             </div>
@@ -850,14 +933,14 @@
                                 <span class="inline-flex mt-2 px-3 py-1.5 rounded-full text-[11px] font-bold text-red-300 bg-red-400/10 border border-red-400/20 tracking-wide">OFFLINE</span>
                             </div>
                         </div>
-                        <div class="mt-8 flex-1">
+                        <div class="mt-8 flex-1 pointer-events-auto">
                             <h3 class="text-3xl font-extrabold">HM TUBE</h3>
                             <p class="text-gray-400 text-sm leading-7 mt-5 font-medium">Eksperimen aplikasi Android untuk menonton video dengan tampilan dan kontrol pemutaran yang dibuat lebih sesuai dengan kebutuhan penggunaan mobile.</p>
                             <div class="flex flex-wrap gap-2.5 mt-7">
                                 <span class="tag">Android</span><span class="tag">Kotlin</span><span class="tag">API</span><span class="tag">Player</span>
                             </div>
                         </div>
-                        <div class="flex gap-3 mt-8">
+                        <div class="flex gap-3 mt-8 pointer-events-auto">
                             <a href="https://www.mediafire.com/file/88xxt1p5uxm57iz/HM+TUBE_1.5.apk/file" target="_blank" class="pressable project-link primary flex-1">Download APK <i class="fas fa-download"></i></a>
                             <a href="https://whatsapp.com/channel/0029VbDQhK9GufIwKphQYn1v" target="_blank" class="pressable project-link secondary w-14 px-0 text-lg"><i class="fab fa-whatsapp text-green-400"></i></a>
                         </div>
