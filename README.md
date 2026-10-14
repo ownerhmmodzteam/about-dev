@@ -4,8 +4,8 @@ Portofolio ini memakai frontend HTML/CSS/Vanilla JavaScript untuk menjaga UI rin
 
 ## Fitur
 
-- Mempertahankan konten dan interaksi portfolio HTML awal: Home, Journey, Projects, Tech, loader, animasi klik/ripple, musik, dan tautan proyek.
-- Tema adaptif: System / Light / Dark, dengan pilihan disimpan secara lokal.
+- Menata ulang portfolio menjadi satu halaman scroll dengan navigasi anchor: Home, Journey, Projects, dan Tech Stack. Loader berat dan logika video latar `latar.webm` dihapus; latar diganti ambience gradient dan grid CSS yang ringan.
+- Tema adaptif: System / Light / Dark, dengan pilihan disimpan secara lokal. Desain editorial gelap dengan aksen hijau-lime, kartu rapi, dan animasi reveal yang menghormati reduced-motion.
 - Responsif untuk mobile, tablet, dan desktop; navigasi mobile disesuaikan agar tidak meluber.
 - API portfolio digunakan frontend untuk memperbarui deskripsi proyek dan menampilkan status backend.
 - Serverless API: `/api/health`, `/api/portfolio`, dan `/api/contact`.
@@ -54,10 +54,10 @@ Contoh body:
 }
 ```
 
-## Aset opsional
+## Aset
 
-HTML awal merujuk ke `latar.webm` dan `sta.mp3`. Letakkan file milik Anda di root project dengan nama yang sama bila ingin menampilkan video latar dan musik. Halaman tetap berjalan tanpa aset tersebut.
+Tidak membutuhkan `latar.webm`; seluruh latar visual dibuat dengan CSS dan animasi ringan. Audio latar juga tidak dipakai pada desain baru.
 
 ## Catatan performa
 
-UI awal dipertahankan supaya identitas dan interaksinya tidak hilang. Frontend menggunakan JavaScript native; API tidak memiliki dependency npm. Tailwind CDN, Font Awesome CDN, dan Google Fonts dari source awal masih digunakan untuk mempertahankan desain yang ada. Jika target berikutnya adalah ukuran transfer paling kecil, langkah optimasi lanjutan adalah mengganti Tailwind CDN dengan CSS hasil build lokal dan mengurangi ketergantungan ikon/font eksternal.
+Struktur konten penting tetap dipertahankan, tetapi UI/UX ditata ulang menjadi satu halaman scroll agar navigasi tidak menyembunyikan section. Frontend menggunakan JavaScript native; API tidak memiliki dependency npm. Tailwind CDN, Font Awesome CDN, dan Google Fonts dari source awal masih digunakan untuk mempertahankan desain yang ada. Jika target berikutnya adalah ukuran transfer paling kecil, langkah optimasi lanjutan adalah mengganti Tailwind CDN dengan CSS hasil build lokal dan mengurangi ketergantungan ikon/font eksternal.

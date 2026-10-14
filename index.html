@@ -91,31 +91,6 @@
             background: #a855f7;
         }
 
-        .video-layer {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            overflow: hidden;
-            background: #030508;
-        }
-
-        .video-layer video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: .18;
-            filter: saturate(1.1) contrast(1.1);
-        }
-
-        .video-layer::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background:
-                linear-gradient(180deg, rgba(3,5,8,.75), rgba(3,5,8,.4) 40%, rgba(3,5,8,.95)),
-                radial-gradient(circle at 50% 10%, transparent, rgba(3,5,8,.6) 80%);
-        }
-
         .noise {
             /* OPTIMASI: SVG Noise dimatikan karena sangat berat memakan CPU & RAM HP */
             display: none; 
@@ -685,10 +660,6 @@
             color: var(--text);
             background: var(--bg);
         }
-        body[data-theme="light"] .video-layer { opacity: .06; }
-        body[data-theme="light"] .video-layer::after {
-            background: linear-gradient(180deg, rgba(245,247,251,.82), rgba(245,247,251,.93));
-        }
         body[data-theme="light"] .ambient { opacity: .45; }
         body[data-theme="light"] .glass {
             background: linear-gradient(145deg, rgba(255,255,255,.92), rgba(255,255,255,.72));
@@ -741,32 +712,124 @@
                 transition-duration: .01ms !important;
             }
         }
+
+        /* HM MODZ — editorial portfolio redesign: one continuous page, no background video. */
+        :root {
+            --bg: #090b0e;
+            --panel: rgba(18, 22, 27, .88);
+            --line: rgba(255,255,255,.10);
+            --muted: #929ba7;
+            --text: #f1f3f4;
+            --blue: #b5f36a;
+            --cyan: #c9ff8a;
+            --green: #b5f36a;
+            --blur: blur(8px);
+            --accent: #b5f36a;
+            --surface: #11151a;
+        }
+        html { scroll-behavior: smooth; scroll-padding-top: 108px; }
+        body { background: var(--bg); color: var(--text); font-size: 15px; }
+        body::before {
+            content: ""; position: fixed; inset: 0; z-index: -2; pointer-events: none;
+            background: radial-gradient(ellipse at 78% 7%, rgba(181,243,106,.10), transparent 28%),
+                        radial-gradient(ellipse at 8% 45%, rgba(95,120,95,.09), transparent 30%),
+                        linear-gradient(145deg, #090b0e 0%, #0c1011 48%, #090b0e 100%);
+        }
+        body::after {
+            content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .22;
+            background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+            background-size: 52px 52px; mask-image: linear-gradient(to bottom, black, transparent 85%);
+        }
+        .ambient { opacity: .55; }
+        .ambient::before, .ambient::after { filter: blur(54px); opacity: .10; width: 32vw; height: 32vw; }
+        .ambient::before { background: #b5f36a; top: 8%; left: -18%; animation: orbDrift 19s ease-in-out infinite alternate; }
+        .ambient::after { background: #6f9f80; right: -14%; bottom: 4%; animation: orbDrift 24s ease-in-out infinite alternate-reverse; }
+        @keyframes orbDrift { from { transform: translate3d(0,0,0) scale(.94); } to { transform: translate3d(32px,-24px,0) scale(1.06); } }
+        nav.fixed {
+            top: 18px !important; padding: 7px !important; gap: 4px !important; border-radius: 16px !important;
+            background: rgba(14,17,20,.88) !important; border: 1px solid rgba(255,255,255,.12) !important;
+            box-shadow: 0 16px 50px rgba(0,0,0,.28) !important; backdrop-filter: blur(14px) !important;
+            -webkit-backdrop-filter: blur(14px) !important; width: max-content; max-width: calc(100% - 24px);
+        }
+        nav .tab-btn { color: #8f999f !important; border: 1px solid transparent !important; border-radius: 11px !important; padding: 10px 15px !important; font-size: 12px !important; transition: color .2s ease, background .2s ease, border-color .2s ease !important; }
+        nav .tab-btn:hover, nav .tab-btn.is-current { color: #eaf6dc !important; background: rgba(181,243,106,.10) !important; border-color: rgba(181,243,106,.15) !important; }
+        .theme-toggle { border-radius: 11px !important; background: rgba(255,255,255,.04) !important; border: 1px solid rgba(255,255,255,.08) !important; }
+        main { max-width: 1120px !important; padding-top: 142px !important; padding-left: 28px !important; padding-right: 28px !important; }
+        .tab-content, .tab-content.active, #home.active { display: block !important; min-height: 0 !important; animation: none !important; scroll-margin-top: 112px; }
+        .tab-content { padding: 52px 0 70px; border-bottom: 1px solid rgba(255,255,255,.09); opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s cubic-bezier(.2,.8,.2,1); }
+        .tab-content.in-view { opacity: 1; transform: translateY(0); }
+        #home { padding-top: 34px; min-height: 70vh !important; display: flex !important; flex-direction: column; justify-content: center; }
+        #journey, #projects, #tech { padding-top: 76px; }
+        .hero-grid::before { inset: -35px -20px; background-size: 58px 58px; opacity: .48; mask-image: radial-gradient(ellipse at center, black, transparent 72%); }
+        .eyebrow { border: 1px solid rgba(181,243,106,.25) !important; color: #d4f7b0 !important; background: rgba(181,243,106,.07) !important; box-shadow: none !important; letter-spacing: .14em; }
+        .status-dot { background: var(--accent) !important; box-shadow: 0 0 12px rgba(181,243,106,.5) !important; }
+        .hero-title { max-width: 900px; margin-inline: auto; font-size: clamp(3.2rem, 8vw, 7rem) !important; line-height: .99 !important; letter-spacing: -.075em; }
+        .gradient-text { background: linear-gradient(105deg, #f7f8f5 4%, #c6f994 52%, #7fae8c 100%) !important; -webkit-background-clip: text !important; background-clip: text !important; }
+        .hero-copy { max-width: 630px; margin-inline: auto; font-size: clamp(1rem, 1.4vw, 1.16rem) !important; line-height: 1.9 !important; color: #9ca6a8 !important; }
+        .glass { background: linear-gradient(145deg, rgba(255,255,255,.045), rgba(255,255,255,.018)) !important; border: 1px solid rgba(255,255,255,.09) !important; box-shadow: 0 18px 55px rgba(0,0,0,.12), inset 0 1px rgba(255,255,255,.04) !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+        .glass-hover:hover { transform: translateY(-4px); border-color: rgba(181,243,106,.26) !important; box-shadow: 0 22px 55px rgba(0,0,0,.23) !important; }
+        .section-title, h2 { letter-spacing: -.045em; }
+        .project-card, .tech-card, .journey-card, .metric { border-radius: 20px !important; }
+        .project-card, .tech-card { transition: transform .25s ease, border-color .25s ease, background .25s ease !important; }
+        .project-card:hover, .tech-card:hover { transform: translateY(-4px); border-color: rgba(181,243,106,.25) !important; }
+        .project-link.primary { background: var(--accent) !important; color: #11170d !important; border-color: transparent !important; font-weight: 800; }
+        .project-link.secondary { border-color: rgba(255,255,255,.15) !important; background: rgba(255,255,255,.035) !important; }
+        .text-blue-400, .text-blue-300 { color: #c5f48f !important; }
+        .bg-blue-500\/10 { background: rgba(181,243,106,.08) !important; }
+        .border-blue-500\/20 { border-color: rgba(181,243,106,.18) !important; }
+        .footer-line { background: linear-gradient(90deg, transparent, rgba(181,243,106,.3), transparent) !important; }
+        .toast { border-color: rgba(181,243,106,.2) !important; }
+        .reveal, .project-card, .tech-card { will-change: auto; }
+        .tab-content .project-card, .tab-content .tech-card { opacity: 0; transform: translateY(12px); transition: opacity .5s ease, transform .5s ease, border-color .25s ease, background .25s ease; }
+        .tab-content.in-view .project-card, .tab-content.in-view .tech-card { opacity: 1; transform: translateY(0); }
+        body[data-theme="light"] { --bg: #f5f6f1; --text: #20251e; --muted: #72796f; --panel: rgba(255,255,250,.88); }
+        body[data-theme="light"]::before { background: radial-gradient(ellipse at 78% 7%, rgba(112,157,75,.13), transparent 30%), linear-gradient(145deg,#f7f8f3,#eef1e8 55%,#f8f8f4); }
+        body[data-theme="light"]::after { opacity: .35; background-image: linear-gradient(rgba(32,37,30,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(32,37,30,.04) 1px, transparent 1px); }
+        body[data-theme="light"] nav.fixed { background: rgba(250,251,246,.9) !important; border-color: rgba(30,40,25,.12) !important; }
+        body[data-theme="light"] nav .tab-btn:hover, body[data-theme="light"] nav .tab-btn.is-current { color: #293c1c !important; background: rgba(112,157,75,.12) !important; }
+        body[data-theme="light"] .glass { background: rgba(255,255,251,.76) !important; border-color: rgba(30,40,25,.10) !important; box-shadow: 0 18px 55px rgba(42,52,34,.07) !important; }
+        body[data-theme="light"] .hero-copy { color: #626a5e !important; }
+        body[data-theme="light"] .gradient-text { background: linear-gradient(105deg,#20251e 4%,#547c35 52%,#688f77 100%) !important; -webkit-background-clip: text !important; background-clip: text !important; }
+        body[data-theme="light"] .eyebrow { color: #476b2e !important; background: rgba(112,157,75,.09) !important; border-color: rgba(112,157,75,.22) !important; }
+        body[data-theme="light"] .text-white { color: #20251e !important; }
+        body[data-theme="light"] .text-gray-400, body[data-theme="light"] .text-gray-500 { color: #697165 !important; }
+        body[data-theme="light"] .project-link.secondary { color: #293126 !important; background: rgba(255,255,255,.65) !important; }
+        @media (max-width: 640px) {
+            html { scroll-padding-top: 90px; }
+            nav.fixed { top: 10px !important; gap: 2px !important; padding: 5px !important; border-radius: 14px !important; }
+            nav .tab-btn { padding: 9px 10px !important; font-size: 11px !important; }
+            .theme-toggle { width: 34px; height: 34px; flex-basis: 34px; }
+            main { padding: 100px 18px 42px !important; }
+            #home { min-height: 67vh !important; padding-top: 18px; }
+            .tab-content { padding: 44px 0 48px; }
+            #journey, #projects, #tech { padding-top: 55px; }
+            .hero-title { font-size: clamp(2.8rem, 12vw, 4.6rem) !important; }
+            .hero-grid::before { inset: -16px -8px; background-size: 42px 42px; }
+            .ambient::before, .ambient::after { width: 58vw; height: 58vw; filter: blur(46px); }
+        }
+        @media (max-width: 390px) {
+            nav .tab-btn { padding: 8px 7px !important; font-size: 10px !important; }
+            nav .theme-toggle { width: 30px; height: 30px; flex-basis: 30px; }
+            main { padding-left: 15px !important; padding-right: 15px !important; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .ambient::before, .ambient::after { animation: none !important; }
+            .tab-content, .tab-content .project-card, .tab-content .tech-card { transition: none !important; }
+        }
+
     </style>
 </head>
 
-<body class="loading min-h-screen">
-    <div id="loader">
-        <div class="loader-inner">
-            <div class="loader-brand">&gt; HM_MODZ_TEAM / PORTFOLIO</div>
-            <div class="typing"><span id="typed-text" class="gradient-text"></span><span class="cursor"></span></div>
-            <div class="loader-line"><span></span></div>
-        </div>
-    </div>
-
-    <div class="video-layer">
-        <video autoplay loop muted playsinline>
-            <source src="latar.webm" type="video/webm">
-        </video>
-    </div>
+<body class="min-h-screen">
     <div class="ambient"></div>
     <div class="noise"></div>
 
     <!-- Menambahkan Tab Journey -->
     <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 glass rounded-full px-2 py-2 flex gap-1 w-auto justify-center">
-        <button onclick="openTab('home')" id="btn-home" class="tab-btn pressable click-anim px-6 py-2.5 rounded-full text-sm font-bold bg-white/10 text-white border border-white/10">Home</button>
-        <button onclick="openTab('journey')" id="btn-journey" class="tab-btn pressable click-anim px-6 py-2.5 rounded-full text-sm font-bold text-gray-400 hover:text-white">Journey</button>
-        <button onclick="openTab('projects')" id="btn-projects" class="tab-btn pressable click-anim px-6 py-2.5 rounded-full text-sm font-bold text-gray-400 hover:text-white">Projects</button>
-        <button onclick="openTab('tech')" id="btn-tech" class="tab-btn pressable click-anim px-6 py-2.5 rounded-full text-sm font-bold text-gray-400 hover:text-white">Tech</button>
+        <button onclick="openTab('home')" id="btn-home" data-nav="home" class="tab-btn pressable click-anim px-6 py-2.5 rounded-full text-sm font-bold bg-white/10 text-white border border-white/10">Home</button>
+        <button onclick="openTab('journey')" id="btn-journey" data-nav="journey" class="tab-btn pressable click-anim px-6 py-2.5 rounded-full text-sm font-bold text-gray-400 hover:text-white">Journey</button>
+        <button onclick="openTab('projects')" id="btn-projects" data-nav="projects" class="tab-btn pressable click-anim px-6 py-2.5 rounded-full text-sm font-bold text-gray-400 hover:text-white">Projects</button>
+        <button onclick="openTab('tech')" id="btn-tech" data-nav="tech" class="tab-btn pressable click-anim px-6 py-2.5 rounded-full text-sm font-bold text-gray-400 hover:text-white">Tech Stack</button>
         <button id="theme-toggle" class="theme-toggle pressable" type="button" aria-label="Ganti tema" title="Ganti tema" aria-pressed="false"><i id="theme-toggle-icon" class="fas fa-desktop"></i></button>
     </nav>
 
@@ -1117,86 +1180,44 @@
         </section>
     </main>
 
-    <div class="fixed bottom-6 right-6 z-50">
-        <div class="relative">
-            <div class="music-ring"></div>
-            <button class="music-button glass pressable click-anim" onclick="toggleMusic()" title="Toggle Music" aria-label="Toggle Music">
-                <i id="music-icon" class="fas fa-play text-lg"></i>
-            </button>
-        </div>
-        <audio id="myAudio" loop>
-            <source src="sta.mp3" type="audio/mpeg">
-        </audio>
-    </div>
-
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const text = "Menyiapkan portofolio HM MODZ TEAM...";
-            const typed = document.getElementById("typed-text");
-            const loader = document.getElementById("loader");
-            let index = 0;
-
-            function typeText() {
-                if (index < text.length) {
-                    typed.textContent += text.charAt(index++);
-                    setTimeout(typeText, 30);
-                } else {
-                    setTimeout(() => {
-                        loader.classList.add("hidden");
-                        document.body.classList.remove("loading");
-                        setTimeout(() => loader.remove(), 800);
-                    }, 600);
-                }
-            }
-
-            setTimeout(typeText, 200);
             setupInteractions();
+            document.body.classList.add("page-ready");
+            const revealItems = document.querySelectorAll(".tab-content, .project-card, .tech-card, .journey-card");
+            if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("in-view");
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.08, rootMargin: "0px 0px -28px 0px" });
+                revealItems.forEach(item => observer.observe(item));
+            } else revealItems.forEach(item => item.classList.add("in-view"));
+            setupScrollSpy();
         });
 
-        function openTab(tabName) {
-            document.querySelectorAll(".tab-content").forEach(tab => {
-                tab.classList.remove("active");
-                tab.style.animation = "none";
-            });
-
-            document.querySelectorAll(".tab-btn").forEach(btn => {
-                btn.className = "tab-btn pressable click-anim px-6 py-2.5 rounded-full text-sm font-bold text-gray-400 hover:text-white transition-colors";
-            });
-
-            const activeTab = document.getElementById(tabName);
-            const activeBtn = document.getElementById("btn-" + tabName);
-
-            activeTab.classList.add("active");
-            activeTab.style.animation = "pageIn .6s cubic-bezier(.2,.8,.2,1) both";
-            activeBtn.className = "tab-btn pressable click-anim px-6 py-2.5 rounded-full text-sm font-bold bg-white/10 text-white border border-white/15 shadow-[0_0_15px_rgba(255,255,255,0.05)]";
-
-            window.scrollTo({ top: 0, behavior: "smooth" });
-            setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 40);
+        function setupScrollSpy() {
+            const sections = ["home", "journey", "projects", "tech"].map(id => document.getElementById(id)).filter(Boolean);
+            if (!("IntersectionObserver" in window)) return;
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    document.querySelectorAll(".tab-btn[data-nav]").forEach(btn => btn.classList.toggle("is-current", btn.dataset.nav === entry.target.id));
+                });
+            }, { rootMargin: "-28% 0px -58% 0px", threshold: 0 });
+            sections.forEach(section => observer.observe(section));
         }
 
-        const audio = document.getElementById("myAudio");
-        const icon = document.getElementById("music-icon");
-
-        function toggleMusic() {
-            const button = document.querySelector(".music-button");
-            button.classList.add("click-feedback");
-            setTimeout(() => button.classList.remove("click-feedback"), 450);
-
-            if (audio.paused) {
-                audio.play().then(() => {
-                    icon.className = "fas fa-pause text-lg";
-                    showToast("Musik latar dinyalakan.");
-                }).catch(() => {
-                    icon.className = "fas fa-play text-lg";
-                    showToast("Musik belum dapat diputar. Coba tekan lagi.");
-                });
-            } else {
-                audio.pause();
-                icon.className = "fas fa-play text-lg";
-                showToast("Musik latar dijeda.");
-            }
+        function openTab(tabName) {
+            const target = document.getElementById(tabName);
+            if (!target) return;
+            target.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+            document.querySelectorAll(".tab-btn[data-nav]").forEach(btn => btn.classList.toggle("is-current", btn.dataset.nav === tabName));
         }
 
         function showToast(message) {
@@ -1334,7 +1355,7 @@
         loadPortfolioData();
 
         document.addEventListener("contextmenu", event => {
-            if (event.target.tagName === "IMG" || event.target.tagName === "VIDEO") event.preventDefault();
+            if (event.target.tagName === "IMG") event.preventDefault();
         });
     </script>
 </body>
