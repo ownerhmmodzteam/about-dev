@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#030508" id="theme-color-meta">
     <meta name="color-scheme" content="dark light">
-    <meta name="description" content="HM MODZ TEAM — Developer Portfolio">
-    <title>HM MODZ TEAM | Developer Portfolio</title>
+    <meta name="description" content="NEST TEAM PROJECT — Developer Portfolio">
+    <title>NEST TEAM PROJECT | Developer Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -817,6 +817,96 @@
             .tab-content, .tab-content .project-card, .tab-content .tech-card { transition: none !important; }
         }
 
+
+        .hero-brand-wrap { display: flex; flex-direction: column; align-items: center; gap: 18px; margin-bottom: 1.8rem; }
+        .hero-logo-frame { width: 112px; height: 112px; display: grid; place-items: center; position: relative; border-radius: 34px; padding: 8px; border: 1px solid rgba(255,255,255,.14); background: linear-gradient(145deg, rgba(255,255,255,.10), rgba(255,255,255,.025)); box-shadow: 0 16px 55px rgba(66,232,160,.10), inset 0 1px 0 rgba(255,255,255,.12); animation: logo-float 6s ease-in-out infinite; }
+        .hero-logo-frame::before { content: ""; position: absolute; inset: -5px; border-radius: 38px; border: 1px solid rgba(66,232,160,.18); pointer-events: none; }
+        .hero-logo { display: block; width: 100%; height: 100%; object-fit: contain; border-radius: 25px; }
+        .hero-brand-name { color: var(--muted); font-size: .78rem; font-weight: 800; letter-spacing: .28em; text-transform: uppercase; }
+        @keyframes logo-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+        body[data-theme="light"] .hero-logo-frame { border-color: rgba(20,30,50,.12); background: linear-gradient(145deg, rgba(255,255,255,.95), rgba(235,240,248,.7)); box-shadow: 0 16px 45px rgba(20,40,70,.10); }
+        @media (max-width: 480px) { .hero-logo-frame { width: 92px; height: 92px; border-radius: 28px; } .hero-logo-frame::before { border-radius: 32px; } .hero-brand-name { font-size: .68rem; letter-spacing: .2em; } }
+        @media (prefers-reduced-motion: reduce) { .hero-logo-frame { animation: none !important; } }
+
+        /* NEST TEAM PROJECT — Liquid Glass / Obsidian × Solar Gold */
+        :root {
+            color-scheme: dark;
+            --bg: #050505;
+            --panel: rgba(15, 15, 15, .42);
+            --line: rgba(255, 211, 72, .20);
+            --muted: #a7a7a7;
+            --text: #f8f7f2;
+            --accent: #ffd447;
+            --yellow: #ffe36a;
+            --gold: #f6a900;
+        }
+        html { background: #050505; }
+        body { background: #050505 !important; color: #f8f7f2 !important; }
+        body::before {
+            background:
+                radial-gradient(ellipse at 50% -12%, rgba(255,204,48,.13), transparent 34%),
+                radial-gradient(ellipse at 2% 42%, rgba(255,184,0,.055), transparent 29%),
+                linear-gradient(145deg, #030303 0%, #090909 48%, #040404 100%) !important;
+        }
+        body::after {
+            opacity: .16 !important;
+            background-image: linear-gradient(rgba(255,220,95,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,220,95,.045) 1px, transparent 1px) !important;
+        }
+        .ambient { opacity: .72 !important; }
+        .ambient::before, .ambient::after {
+            filter: blur(48px) !important;
+            opacity: .12 !important;
+            width: 31vw !important; height: 31vw !important;
+            min-width: 230px; min-height: 230px;
+        }
+        .ambient::before { background: #ffd447 !important; animation: goldDrift 22s ease-in-out infinite alternate !important; }
+        .ambient::after { background: #b77700 !important; animation: goldDrift 27s ease-in-out infinite alternate-reverse !important; }
+        @keyframes goldDrift { from { transform: translate3d(0,0,0) scale(.96); } to { transform: translate3d(18px,-14px,0) scale(1.035); } }
+        nav.fixed, .glass {
+            background: linear-gradient(135deg, rgba(255,255,255,.075), rgba(255,255,255,.018) 55%, rgba(255,212,71,.025)) !important;
+            border: 1px solid rgba(255,255,255,.13) !important;
+            box-shadow: 0 14px 44px rgba(0,0,0,.20), inset 0 1px 0 rgba(255,255,255,.10) !important;
+            -webkit-backdrop-filter: blur(16px) saturate(135%) !important;
+            backdrop-filter: blur(16px) saturate(135%) !important;
+        }
+        nav.fixed { background: rgba(12,12,12,.62) !important; border-color: rgba(255,212,71,.19) !important; }
+        nav .tab-btn { color: #aaa9a3 !important; }
+        nav .tab-btn:hover, nav .tab-btn.is-current, nav .tab-btn.bg-white\/10 {
+            color: #fff4c3 !important; background: rgba(255,212,71,.12) !important;
+            border-color: rgba(255,212,71,.25) !important;
+        }
+        .gradient-text {
+            background: linear-gradient(105deg, #fffdf5 0%, #ffe36a 42%, #ffc21a 72%, #f29c00 100%) !important;
+            -webkit-background-clip: text !important; background-clip: text !important;
+        }
+        .eyebrow { color: #ffe58b !important; background: rgba(255,212,71,.065) !important; border-color: rgba(255,212,71,.22) !important; }
+        .status-dot { background: #ffd447 !important; box-shadow: 0 0 10px rgba(255,212,71,.48) !important; }
+        .hero-copy { color: #b6b4ac !important; }
+        .project-link.primary { background: linear-gradient(110deg,#ffe36a,#ffbd18 70%,#f2a000) !important; color: #171204 !important; box-shadow: 0 8px 26px rgba(255,190,20,.12) !important; }
+        .project-link.secondary { color: #f3f0e6 !important; background: rgba(255,255,255,.035) !important; border-color: rgba(255,255,255,.14) !important; }
+        .glass-hover:hover, .project-card:hover, .tech-card:hover { border-color: rgba(255,212,71,.27) !important; box-shadow: 0 20px 48px rgba(0,0,0,.22) !important; }
+        .text-blue-400, .text-blue-300, .text-cyan-400 { color: #ffdb58 !important; }
+        .bg-blue-500\/10 { background: rgba(255,212,71,.08) !important; }
+        .border-blue-500\/20 { border-color: rgba(255,212,71,.18) !important; }
+        .footer-line { background: linear-gradient(90deg, transparent, rgba(255,212,71,.34), transparent) !important; }
+        .toast { background: rgba(16,16,16,.82) !important; border-color: rgba(255,212,71,.22) !important; color: #fff7d9 !important; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+        .hero-logo-frame { border-color: rgba(255,212,71,.24) !important; background: linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,212,71,.035)) !important; box-shadow: 0 14px 42px rgba(255,190,20,.07), inset 0 1px 0 rgba(255,255,255,.13) !important; }
+        .hero-logo-frame::before { border-color: rgba(255,212,71,.20) !important; }
+        /* Keep the palette consistent even if an older saved light-mode preference exists. */
+        body[data-theme="light"] { --bg:#050505 !important; --text:#f8f7f2 !important; --muted:#a7a7a7 !important; color:#f8f7f2 !important; }
+        body[data-theme="light"]::before { background: radial-gradient(ellipse at 50% -12%,rgba(255,204,48,.13),transparent 34%), linear-gradient(145deg,#030303 0%,#090909 48%,#040404 100%) !important; }
+        body[data-theme="light"]::after { opacity:.16 !important; }
+        body[data-theme="light"] nav.fixed { background:rgba(12,12,12,.62) !important; border-color:rgba(255,212,71,.19) !important; }
+        body[data-theme="light"] .glass { background:linear-gradient(135deg,rgba(255,255,255,.075),rgba(255,255,255,.018) 55%,rgba(255,212,71,.025)) !important; border-color:rgba(255,255,255,.13) !important; }
+        body[data-theme="light"] .gradient-text { background:linear-gradient(105deg,#fffdf5 0%,#ffe36a 42%,#ffc21a 72%,#f29c00 100%) !important; -webkit-background-clip:text !important; background-clip:text !important; }
+        body[data-theme="light"] .text-white { color:#f8f7f2 !important; }
+        body[data-theme="light"] .text-gray-400, body[data-theme="light"] .text-gray-500 { color:#aaa9a3 !important; }
+        @media (max-width: 640px) {
+            nav.fixed, .glass { -webkit-backdrop-filter: blur(12px) saturate(125%) !important; backdrop-filter: blur(12px) saturate(125%) !important; }
+            .ambient::before, .ambient::after { filter: blur(38px) !important; }
+        }
+        @media (prefers-reduced-motion: reduce) { .ambient::before, .ambient::after { animation: none !important; } }
+
     </style>
 </head>
 
@@ -830,7 +920,6 @@
         <button onclick="openTab('journey')" id="btn-journey" data-nav="journey" class="tab-btn pressable click-anim px-6 py-2.5 rounded-full text-sm font-bold text-gray-400 hover:text-white">Journey</button>
         <button onclick="openTab('projects')" id="btn-projects" data-nav="projects" class="tab-btn pressable click-anim px-6 py-2.5 rounded-full text-sm font-bold text-gray-400 hover:text-white">Projects</button>
         <button onclick="openTab('tech')" id="btn-tech" data-nav="tech" class="tab-btn pressable click-anim px-6 py-2.5 rounded-full text-sm font-bold text-gray-400 hover:text-white">Tech Stack</button>
-        <button id="theme-toggle" class="theme-toggle pressable" type="button" aria-label="Ganti tema" title="Ganti tema" aria-pressed="false"><i id="theme-toggle-icon" class="fas fa-desktop"></i></button>
     </nav>
 
     <main class="relative z-30 max-w-6xl w-full mx-auto px-6 pt-32 pb-24">
@@ -843,8 +932,11 @@
                         Selamat datang di portofolio
                     </div>
 
-                    <div>
-                        <div class="text-sm text-gray-500 font-bold tracking-[.24em] uppercase mb-5">HM MODZ TEAM</div>
+                    <div class="hero-brand-wrap">
+                        <div class="hero-logo-frame" aria-label="Logo NEST TEAM PROJECT">
+                            <img src="icon.png" alt="NEST TEAM PROJECT icon" class="hero-logo" width="96" height="96" fetchpriority="high" decoding="async">
+                        </div>
+                        <div class="hero-brand-name">NEST TEAM PROJECT</div>
                         <h1 class="hero-title text-7xl lg:text-8xl font-extrabold">
                             <span class="text-white">Halo,</span>
                             <span class="gradient-text">selamat datang.</span>
@@ -852,7 +944,7 @@
                     </div>
 
                     <p class="hero-copy mx-auto text-lg leading-8 font-medium">
-                        Ini adalah portofolio HM MODZ TEAM, tempat aku menampilkan berbagai aplikasi,
+                        Ini adalah portofolio NEST TEAM PROJECT, tempat kami menampilkan berbagai aplikasi,
                         eksperimen, dan project yang sedang maupun pernah aku bangun. Fokus utamanya
                         adalah membuat aplikasi yang nyaman digunakan, optimal, dan punya pengalaman
                         pengguna yang tetap terasa modern.
@@ -1094,7 +1186,7 @@
 
             <div class="footer-line mt-16"></div>
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 text-sm text-gray-500 font-medium">
-                <span>Selected projects · HM MODZ TEAM</span>
+                <span>Selected projects · NEST TEAM PROJECT</span>
                 <span class="footer-meta"><span id="api-status" class="api-status" aria-live="polite">API: menghubungkan...</span> <span>Designed & built with curiosity.</span></span>
             </div>
         </section>
@@ -1297,39 +1389,6 @@
         }
 
 
-
-        // Theme mode: System / Light / Dark. No framework or additional runtime dependency.
-        (() => {
-            const body = document.body;
-            const button = document.getElementById('theme-toggle');
-            const buttonIcon = document.getElementById('theme-toggle-icon');
-            const meta = document.getElementById('theme-color-meta');
-            const modes = ['system', 'light', 'dark'];
-            const media = window.matchMedia('(prefers-color-scheme: light)');
-            let mode = 'system';
-            try { mode = localStorage.getItem('hm-theme-mode') || 'system'; } catch (_) {}
-            if (!modes.includes(mode)) mode = 'system';
-
-            function applyTheme() {
-                const resolved = mode === 'system' ? (media.matches ? 'light' : 'dark') : mode;
-                body.dataset.theme = resolved;
-                if (meta) meta.setAttribute('content', resolved === 'light' ? '#f5f7fb' : '#030508');
-                if (buttonIcon) buttonIcon.className = mode === 'system' ? 'fas fa-desktop' : mode === 'light' ? 'fas fa-sun' : 'fas fa-moon';
-                if (button) {
-                    button.setAttribute('aria-pressed', String(mode !== 'system'));
-                    button.setAttribute('aria-label', 'Tema: ' + (mode === 'system' ? 'ikuti sistem' : mode === 'light' ? 'terang' : 'gelap') + '. Tekan untuk mengganti');
-                    button.title = 'Tema: ' + (mode === 'system' ? 'Sistem' : mode === 'light' ? 'Terang' : 'Gelap');
-                }
-            }
-            button?.addEventListener('click', () => {
-                mode = modes[(modes.indexOf(mode) + 1) % modes.length];
-                try { localStorage.setItem('hm-theme-mode', mode); } catch (_) {}
-                applyTheme();
-                showToast('Tema: ' + (mode === 'system' ? 'mengikuti sistem' : mode === 'light' ? 'terang' : 'gelap'));
-            });
-            media.addEventListener?.('change', () => { if (mode === 'system') applyTheme(); });
-            applyTheme();
-        })();
 
         // Connect the existing UI to the Vercel Serverless portfolio API.
         async function loadPortfolioData() {

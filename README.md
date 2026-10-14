@@ -61,3 +61,7 @@ Tidak membutuhkan `latar.webm`; seluruh latar visual dibuat dengan CSS dan anima
 ## Catatan performa
 
 Struktur konten penting tetap dipertahankan, tetapi UI/UX ditata ulang menjadi satu halaman scroll agar navigasi tidak menyembunyikan section. Frontend menggunakan JavaScript native; API tidak memiliki dependency npm. Tailwind CDN, Font Awesome CDN, dan Google Fonts dari source awal masih digunakan untuk mempertahankan desain yang ada. Jika target berikutnya adalah ukuran transfer paling kecil, langkah optimasi lanjutan adalah mengganti Tailwind CDN dengan CSS hasil build lokal dan mengurangi ketergantungan ikon/font eksternal.
+
+
+### Logo halaman Home
+Letakkan file logo yang ingin digunakan dengan nama `icon.png` di folder root proyek (sejajar dengan `index.html`). Logo ditampilkan di tengah di atas nama **NEST TEAM PROJECT**. Gunakan PNG transparan agar hasilnya rapi.

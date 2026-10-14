@@ -1,6 +1,6 @@
 const portfolio = {
   profile: {
-    name: 'HM MODZ TEAM',
+    name: 'NEST TEAM PROJECT',
     role: 'Independent Developer',
     description: 'Membangun aplikasi, eksperimen digital, dan pengalaman pengguna yang modern.',
     locale: 'id-ID'
