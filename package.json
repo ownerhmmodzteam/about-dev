@@ -1,0 +1,12 @@
+{
+  "name": "hm-modz-portfolio-fullstack",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Adaptive HM MODZ developer portfolio with lightweight Vercel Serverless API routes",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "dev": "node dev-server.js",
+    "start": "node dev-server.js",
+    "check": "node --check dev-server.js && node --check api/health.js && node --check api/portfolio.js && node --check api/contact.js"
+  }
+}
