@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#030508" id="theme-color-meta">
     <meta name="color-scheme" content="dark light">
-    <meta name="description" content="NEST TEAM PROJECT — Developer Portfolio">
-    <title>Nexora PROJECT | Developer Portfolio</title>
+    <meta name="description" content="HM MODZ PROJECT — Developer Portfolio">
+    <title>HM MODZ PROJECT | Developer Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -759,7 +759,7 @@
         .tab-content { padding: 52px 0 70px; border-bottom: 1px solid rgba(255,255,255,.09); opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s cubic-bezier(.2,.8,.2,1); }
         .tab-content.in-view { opacity: 1; transform: translateY(0); }
         #home { padding-top: 34px; min-height: 70vh !important; display: flex !important; flex-direction: column; justify-content: center; }
-        #journey, #projects, #tech { padding-top: 76px; }
+        #projects, #tech { padding-top: 76px; }
         .hero-grid::before { inset: -35px -20px; background-size: 58px 58px; opacity: .48; mask-image: radial-gradient(ellipse at center, black, transparent 72%); }
         .eyebrow { border: 1px solid rgba(181,243,106,.25) !important; color: #d4f7b0 !important; background: rgba(181,243,106,.07) !important; box-shadow: none !important; letter-spacing: .14em; }
         .status-dot { background: var(--accent) !important; box-shadow: 0 0 12px rgba(181,243,106,.5) !important; }
@@ -769,7 +769,7 @@
         .glass { background: linear-gradient(145deg, rgba(255,255,255,.045), rgba(255,255,255,.018)) !important; border: 1px solid rgba(255,255,255,.09) !important; box-shadow: 0 18px 55px rgba(0,0,0,.12), inset 0 1px rgba(255,255,255,.04) !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
         .glass-hover:hover { transform: translateY(-4px); border-color: rgba(181,243,106,.26) !important; box-shadow: 0 22px 55px rgba(0,0,0,.23) !important; }
         .section-title, h2 { letter-spacing: -.045em; }
-        .project-card, .tech-card, .journey-card, .metric { border-radius: 20px !important; }
+        .project-card, .tech-card, .metric { border-radius: 20px !important; }
         .project-card, .tech-card { transition: transform .25s ease, border-color .25s ease, background .25s ease !important; }
         .project-card:hover, .tech-card:hover { transform: translateY(-4px); border-color: rgba(181,243,106,.25) !important; }
         .project-link.primary { background: var(--accent) !important; color: #11170d !important; border-color: transparent !important; font-weight: 800; }
@@ -802,7 +802,7 @@
             main { padding: 100px 18px 42px !important; }
             #home { min-height: 67vh !important; padding-top: 18px; }
             .tab-content { padding: 44px 0 48px; }
-            #journey, #projects, #tech { padding-top: 55px; }
+            #projects, #tech { padding-top: 55px; }
             .hero-title { font-size: clamp(2.8rem, 12vw, 4.6rem) !important; }
             .hero-grid::before { inset: -16px -8px; background-size: 42px 42px; }
             .ambient::before, .ambient::after { width: 58vw; height: 58vw; filter: blur(46px); }
@@ -907,6 +907,74 @@
         }
         @media (prefers-reduced-motion: reduce) { .ambient::before, .ambient::after { animation: none !important; } }
 
+
+
+        /* HM MODZ PROJECT — Monochrome Editorial Design */
+        :root {
+            color-scheme: dark;
+            --bg: #050505;
+            --panel: rgba(255,255,255,.045);
+            --line: rgba(255,255,255,.13);
+            --muted: #a3a3a3;
+            --text: #f7f7f7;
+            --accent: #f2f2f2;
+            --yellow: #fff;
+            --gold: #bdbdbd;
+        }
+        html { background: #050505; }
+        body { background: #050505 !important; color: #f7f7f7 !important; }
+        body::before {
+            background:
+                radial-gradient(ellipse at 50% -15%, rgba(255,255,255,.13), transparent 38%),
+                radial-gradient(ellipse at 0% 55%, rgba(255,255,255,.045), transparent 30%),
+                linear-gradient(145deg,#030303 0%,#101010 52%,#050505 100%) !important;
+        }
+        body::after {
+            opacity: .12 !important;
+            background-image: linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px), linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px) !important;
+        }
+        .ambient { opacity: .58 !important; }
+        .ambient::before, .ambient::after { background: #fff !important; opacity: .075 !important; filter: blur(58px) !important; }
+        .ambient::after { background: #777 !important; }
+        nav.fixed, .glass {
+            background: linear-gradient(135deg,rgba(255,255,255,.085),rgba(255,255,255,.018) 62%,rgba(255,255,255,.035)) !important;
+            border: 1px solid rgba(255,255,255,.14) !important;
+            box-shadow: 0 18px 55px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.10) !important;
+            -webkit-backdrop-filter: blur(18px) saturate(115%) !important;
+            backdrop-filter: blur(18px) saturate(115%) !important;
+        }
+        nav.fixed { background: rgba(12,12,12,.78) !important; border-color: rgba(255,255,255,.16) !important; }
+        nav .tab-btn { color: #a5a5a5 !important; }
+        nav .tab-btn:hover, nav .tab-btn.is-current, nav .tab-btn.bg-white\/10 {
+            color: #fff !important; background: rgba(255,255,255,.11) !important; border-color: rgba(255,255,255,.17) !important;
+        }
+        .gradient-text {
+            background: linear-gradient(105deg,#fff 0%,#d8d8d8 48%,#777 100%) !important;
+            -webkit-background-clip: text !important; background-clip: text !important;
+        }
+        .eyebrow { color: #e8e8e8 !important; background: rgba(255,255,255,.055) !important; border-color: rgba(255,255,255,.17) !important; box-shadow: none !important; }
+        .status-dot { background: #eee !important; box-shadow: 0 0 10px rgba(255,255,255,.5) !important; }
+        .hero-copy { color: #b3b3b3 !important; }
+        .project-link.primary { background: linear-gradient(110deg,#fff,#c9c9c9) !important; color: #090909 !important; box-shadow: 0 9px 28px rgba(255,255,255,.09) !important; border-color: transparent !important; }
+        .project-link.secondary { color: #f4f4f4 !important; background: rgba(255,255,255,.045) !important; border-color: rgba(255,255,255,.17) !important; }
+        .glass-hover:hover, .project-card:hover, .tech-card:hover { border-color: rgba(255,255,255,.29) !important; box-shadow: 0 22px 58px rgba(0,0,0,.34) !important; }
+        .text-blue-400, .text-blue-300, .text-cyan-400, .text-green-400, .text-pink-400, .text-orange-400 { color: #dedede !important; }
+        .bg-blue-500\/10 { background: rgba(255,255,255,.07) !important; }
+        .border-blue-500\/20 { border-color: rgba(255,255,255,.17) !important; }
+        .footer-line { background: linear-gradient(90deg,transparent,rgba(255,255,255,.32),transparent) !important; }
+        .toast { background: rgba(16,16,16,.9) !important; border-color: rgba(255,255,255,.2) !important; color: #fff !important; }
+        .hero-logo-frame { border-color: rgba(255,255,255,.2) !important; background: linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.025)) !important; box-shadow: 0 16px 48px rgba(255,255,255,.055),inset 0 1px 0 rgba(255,255,255,.14) !important; }
+        .hero-logo-frame::before { border-color: rgba(255,255,255,.18) !important; }
+        .project-card, .tech-card, .metric { border-radius: 22px !important; }
+        .project-card:hover, .tech-card:hover { transform: translateY(-5px); }
+        body[data-theme="light"] { --bg:#050505 !important; --text:#f7f7f7 !important; --muted:#a3a3a3 !important; color:#f7f7f7 !important; }
+        body[data-theme="light"]::before { background: radial-gradient(ellipse at 50% -15%,rgba(255,255,255,.13),transparent 38%),linear-gradient(145deg,#030303 0%,#101010 52%,#050505 100%) !important; }
+        body[data-theme="light"] nav.fixed, body[data-theme="light"] .glass { background:linear-gradient(135deg,rgba(255,255,255,.085),rgba(255,255,255,.018) 62%,rgba(255,255,255,.035)) !important; border-color:rgba(255,255,255,.14) !important; }
+        body[data-theme="light"] .gradient-text { background:linear-gradient(105deg,#fff 0%,#d8d8d8 48%,#777 100%) !important; -webkit-background-clip:text !important; background-clip:text !important; }
+        body[data-theme="light"] .text-white { color:#f7f7f7 !important; }
+        body[data-theme="light"] .text-gray-400, body[data-theme="light"] .text-gray-500 { color:#aaa !important; }
+        @media (max-width:640px) { nav.fixed,.glass { -webkit-backdrop-filter:blur(12px) !important; backdrop-filter:blur(12px) !important; } .ambient::before,.ambient::after { filter:blur(42px) !important; } }
+        @media (prefers-reduced-motion:reduce) { .ambient::before,.ambient::after { animation:none !important; } }
     </style>
 </head>
 
@@ -914,10 +982,9 @@
     <div class="ambient"></div>
     <div class="noise"></div>
 
-    <!-- Menambahkan Tab Journey -->
+    <!-- Primary navigation -->
     <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 glass rounded-full px-2 py-2 flex gap-1 w-auto justify-center">
         <button onclick="openTab('home')" id="btn-home" data-nav="home" class="tab-btn pressable click-anim px-6 py-2.5 rounded-full text-sm font-bold bg-white/10 text-white border border-white/10">Home</button>
-        <button onclick="openTab('journey')" id="btn-journey" data-nav="journey" class="tab-btn pressable click-anim px-6 py-2.5 rounded-full text-sm font-bold text-gray-400 hover:text-white">Journey</button>
         <button onclick="openTab('projects')" id="btn-projects" data-nav="projects" class="tab-btn pressable click-anim px-6 py-2.5 rounded-full text-sm font-bold text-gray-400 hover:text-white">Projects</button>
         <button onclick="openTab('tech')" id="btn-tech" data-nav="tech" class="tab-btn pressable click-anim px-6 py-2.5 rounded-full text-sm font-bold text-gray-400 hover:text-white">Tech Stack</button>
     </nav>
@@ -933,10 +1000,10 @@
                     </div>
 
                     <div class="hero-brand-wrap">
-                        <div class="hero-logo-frame" aria-label="Logo NEST TEAM PROJECT">
-                            <img src="icon.png" alt="NEST TEAM PROJECT icon" class="hero-logo" width="96" height="96" fetchpriority="high" decoding="async">
+                        <div class="hero-logo-frame" aria-label="Logo HM MODZ PROJECT">
+                            <img src="icon.png" alt="HM MODZ PROJECT icon" class="hero-logo" width="96" height="96" fetchpriority="high" decoding="async">
                         </div>
-                        <div class="hero-brand-name">Nexora Project</div>
+                        <div class="hero-brand-name">HM MODZ Project</div>
                         <h1 class="hero-title text-7xl lg:text-8xl font-extrabold">
                             <span class="text-white">Halo,</span>
                             <span class="gradient-text">selamat datang.</span>
@@ -944,7 +1011,7 @@
                     </div>
 
                     <p class="hero-copy mx-auto text-lg leading-8 font-medium">
-                        Ini adalah portofolio Nexora Project, tempat kami menampilkan berbagai aplikasi,
+                        Ini adalah portofolio HM MODZ Project, tempat kami menampilkan berbagai aplikasi,
                         eksperimen, dan project yang sedang maupun pernah aku bangun. Fokus utamanya
                         adalah membuat aplikasi yang nyaman digunakan, optimal, dan punya pengalaman
                         pengguna yang tetap terasa modern.
@@ -954,7 +1021,7 @@
                         <button onclick="openTab('projects')" class="pressable click-anim project-link primary w-full sm:w-auto px-8">
                             Lihat Project <i class="fas fa-arrow-right"></i>
                         </button>
-                        <a href="https://whatsapp.com/channel/0029VbE4DHtFMqrbPmPbhv0Q" target="_blank" class="pressable click-anim project-link secondary w-full sm:w-auto px-8">
+                        <a href="https://whatsapp.com/channel/0029VbDg2N1Bfxo8xRKogz1L" target="_blank" class="pressable click-anim project-link secondary w-full sm:w-auto px-8">
                             <i class="fab fa-whatsapp text-green-400 text-lg"></i> Komunitas
                         </a>
                     </div>
@@ -962,7 +1029,7 @@
 
                 <div class="grid grid-cols-3 gap-4 w-full max-w-3xl mt-16 relative z-10">
                     <div class="metric glass rounded-2xl p-6 text-left">
-                        <div class="text-3xl font-extrabold gradient-text">1+</div>
+                        <div class="text-3xl font-extrabold gradient-text">5+</div>
                         <div class="text-xs text-gray-400 mt-2 font-semibold tracking-wide uppercase">Project Dibuat</div>
                     </div>
                     <div class="metric glass rounded-2xl p-6 text-left">
@@ -970,80 +1037,14 @@
                         <div class="text-xs text-gray-400 mt-2 font-semibold tracking-wide uppercase">Teknologi</div>
                     </div>
                     <div class="metric glass rounded-2xl p-6 text-left">
-                        <div class="text-3xl font-extrabold gradient-text">24/7</div>
+                        <div class="text-3xl font-extrabold gradient-text">64/7</div>
                         <div class="text-xs text-gray-400 mt-2 font-semibold tracking-wide uppercase">Eksplorasi</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="journey" class="tab-content">
-            <div class="max-w-3xl mb-14">
-                <div class="eyebrow mb-6"><span class="status-dot"></span> Perjalanan</div>
-                <h2 class="text-6xl font-extrabold tracking-tight">
-                    Jejak Langkah <span class="gradient-text">HM MODZ.</span>
-                </h2>
-                <p class="text-gray-400 text-base leading-8 mt-6 font-medium">
-                    Bukan perjalanan yang selalu sempurna, tetapi setiap perubahan menjadi bagian dari bagaimana kami terus berkembang.
-                </p>
-            </div>
-
-            <div class="relative border-l border-white/10 ml-4 md:ml-6 space-y-10 pb-8">
-                <div class="relative pl-8 md:pl-12 group">
-                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-blue-500 border-[3px] border-[#030508] shadow-[0_0_15px_rgba(59,130,246,0.6)] transition-transform duration-300 group-hover:scale-125"></div>
-                    <div class="glass glass-hover rounded-3xl p-6 md:p-8">
-                        <div class="text-sm font-bold text-blue-400 tracking-wider mb-2">2015 — 2016</div>
-                        <h3 class="text-2xl font-extrabold text-white mb-3">Titik Awal</h3>
-                        <p class="text-gray-400 text-sm leading-7 font-medium">Awal mula lahirnya nama HM MODZ. Fase ini menjadi langkah pertama masuk ke dunia teknologi dengan penuh rasa penasaran.</p>
-                    </div>
-                </div>
-
-                <div class="relative pl-8 md:pl-12 group">
-                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-red-500 border-[3px] border-[#030508] shadow-[0_0_15px_rgba(239,68,68,0.6)] transition-transform duration-300 group-hover:scale-125"></div>
-                    <div class="glass glass-hover rounded-3xl p-6 md:p-8">
-                        <div class="text-sm font-bold text-red-400 tracking-wider mb-2">2016 — 2018</div>
-                        <h3 class="text-2xl font-extrabold text-white mb-3">Fase Gelap</h3>
-                        <p class="text-gray-400 text-sm leading-7 font-medium">Eksplorasi menembus batas hingga merusak sistem keamanan. Hal ini berujung pada diamankannya HM MODZ oleh lembaga terkait, yang membuat pergerakan ditutup dan disembunyikan.</p>
-                    </div>
-                </div>
-
-                <div class="relative pl-8 md:pl-12 group">
-                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-cyan-400 border-[3px] border-[#030508] shadow-[0_0_15px_rgba(34,211,238,0.6)] transition-transform duration-300 group-hover:scale-125"></div>
-                    <div class="glass glass-hover rounded-3xl p-6 md:p-8">
-                        <div class="text-sm font-bold text-cyan-400 tracking-wider mb-2">2019 — 2020</div>
-                        <h3 class="text-2xl font-extrabold text-white mb-3">Kebangkitan & Inovasi</h3>
-                        <p class="text-gray-400 text-sm leading-7 font-medium">HM MODZ lahir kembali dengan inovasi berbeda. Energi diarahkan untuk merintis platform aplikasi streaming yang berawalan dari nama "HM MODZ Stream".</p>
-                    </div>
-                </div>
-
-                <div class="relative pl-8 md:pl-12 group">
-                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-orange-400 border-[3px] border-[#030508] shadow-[0_0_15px_rgba(251,146,60,0.6)] transition-transform duration-300 group-hover:scale-125"></div>
-                    <div class="glass glass-hover rounded-3xl p-6 md:p-8">
-                        <div class="text-sm font-bold text-orange-400 tracking-wider mb-2">2020 — 2023</div>
-                        <h3 class="text-2xl font-extrabold text-white mb-3">Ujian Bertahan</h3>
-                        <p class="text-gray-400 text-sm leading-7 font-medium">Perjalanan panjang yang sangat menyakitkan. Tim dari HM MODZ bubar dan berguguran, hingga hanya menyisakan dua orang yang terus mencoba bertahan.</p>
-                    </div>
-                </div>
-
-                <div class="relative pl-8 md:pl-12 group">
-                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-purple-400 border-[3px] border-[#030508] shadow-[0_0_15px_rgba(192,132,252,0.6)] transition-transform duration-300 group-hover:scale-125"></div>
-                    <div class="glass glass-hover rounded-3xl p-6 md:p-8">
-                        <div class="text-sm font-bold text-purple-400 tracking-wider mb-2">2024 — 2025</div>
-                        <h3 class="text-2xl font-extrabold text-white mb-3">Transformasi & Kehilangan</h3>
-                        <p class="text-gray-400 text-sm leading-7 font-medium">Nama aplikasi berubah menjadi <strong>Nest Stream</strong>. Namun, ada hal yang sangat menyakitkan: kehilangan kedua tim yang tersisa akibat kecelakaan dan penyakit.</p>
-                    </div>
-                </div>
-
-                <div class="relative pl-8 md:pl-12 group">
-                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-gray-400 border-[3px] border-[#030508] shadow-[0_0_15px_rgba(156,163,175,0.6)] transition-transform duration-300 group-hover:scale-125"></div>
-                    <div class="glass glass-hover rounded-3xl p-6 md:p-8">
-                        <div class="text-sm font-bold text-gray-400 tracking-wider mb-2">2025 — 2026</div>
-                        <h3 class="text-2xl font-extrabold text-white mb-3">Titik Jenuh</h3>
-                        <p class="text-gray-400 text-sm leading-7 font-medium">Perjalanan penuh kejenuhan dan kebosanan. Duka yang tertinggal menghancurkan gairah untuk membuat karya baru, membuat ruang inovasi terasa kosong.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        
 
         <section id="projects" class="tab-content">
             <div class="max-w-3xl mb-14">
@@ -1072,14 +1073,14 @@
                             </div>
                         </div>
                         <div class="mt-8 flex-1 pointer-events-auto">
-                            <h3 class="text-3xl font-extrabold">Nexora</h3>
-                            <p class="text-gray-400 text-sm leading-7 mt-5 font-medium">NEXORA adalah platform hiburan digital yang menghadirkan berbagai pilihan film, anime, serta konten Asia dalam satu tempat. Nikmati beragam cerita dari berbagai genre melalui pengalaman menjelajah yang modern, nyaman, dan praktis.</p>
+                            <h3 class="text-3xl font-extrabold">Raivexa</h3>
+                            <p class="text-gray-400 text-sm leading-7 mt-5 font-medium">RaiVexa adalah platform hiburan digital yang menghadirkan berbagai pilihan film, anime, serta konten Asia dalam satu tempat. Nikmati beragam cerita dari berbagai genre melalui pengalaman menjelajah yang modern, nyaman, dan praktis.</p>
                             <div class="flex flex-wrap gap-2.5 mt-7">
                                 <span class="tag">Kotlin</span><span class="tag">Java</span><span class="tag">Server</span><span class="tag">Streaming</span>
                             </div>
                         </div>
                         <div class="flex gap-3 mt-8 pointer-events-auto">
-                            <a href="https://www.mediafire.com/file/h81kbea2b6l44of/Nexora.apk/file" target="_blank" class="pressable project-link primary flex-1">Download APK <i class="fas fa-download"></i></a>
+                            <a href="#" target="_blank" class="pressable project-link primary flex-1">Belum Tersedia<i class="fas fa-download"></i></a>
                             <a href="https://vt.tiktok.com/ZS4Mvb25C/" target="_blank" class="pressable project-link secondary w-14 px-0 text-lg"><i class="fas fa-arrow-up-right-from-square"></i></a>
                         </div>
                     </div>
@@ -1165,19 +1166,19 @@
                             </div>
                             <div class="text-right">
                                 <div class="project-number">05 / 05</div>
-                                <span class="inline-flex mt-2 px-3 py-1.5 rounded-full text-[11px] font-bold text-red-300 bg-red-400/10 border border-red-400/20 tracking-wide">OFFLINE</span>
+                                <span class="inline-flex mt-2 px-3 py-1.5 rounded-full text-[11px] font-bold text-red-300 bg-red-400/10 border border-red-400/20 tracking-wide">ONLINE</span>
                             </div>
                         </div>
                         <div class="mt-8 flex-1 pointer-events-auto">
-                            <h3 class="text-3xl font-extrabold">HM TUBE</h3>
-                            <p class="text-gray-400 text-sm leading-7 mt-5 font-medium">Eksperimen aplikasi Android untuk menonton video dengan tampilan dan kontrol pemutaran yang dibuat lebih sesuai dengan kebutuhan penggunaan mobile.</p>
+                            <h3 class="text-3xl font-extrabold">HM TOOLS</h3>
+                            <p class="text-gray-400 text-sm leading-7 mt-5 font-medium">Aplikasi Tools Untuk Game Free Fire Yang Dapat Mempermudah Mendapatkan Headshot Dan Tanpa Mendapatkan Pelanggaran Dari Pihak Garena.</p>
                             <div class="flex flex-wrap gap-2.5 mt-7">
-                                <span class="tag">Android</span><span class="tag">Kotlin</span><span class="tag">API</span><span class="tag">Player</span>
+                                <span class="tag">Android</span><span class="tag">Native</span><span class="tag">Tools</span><span class="tag">Apps</span>
                             </div>
                         </div>
                         <div class="flex gap-3 mt-8 pointer-events-auto">
-                            <a href="https://www.mediafire.com/file/88xxt1p5uxm57iz/HM+TUBE_1.5.apk/file" target="_blank" class="pressable project-link primary flex-1">Download APK <i class="fas fa-download"></i></a>
-                            <a href="https://whatsapp.com/channel/0029VbDQhK9GufIwKphQYn1v" target="_blank" class="pressable project-link secondary w-14 px-0 text-lg"><i class="fab fa-whatsapp text-green-400"></i></a>
+                            <a href="https://www.mediafire.com/file/2h8csuwcde1jmk2/HM+TOOLS.apk/file" target="_blank" class="pressable project-link primary flex-1">Download APK <i class="fas fa-download"></i></a>
+                            <a href="https://whatsapp.com/channel/0029VbDg2N1Bfxo8xRKogz1L" target="_blank" class="pressable project-link secondary w-14 px-0 text-lg"><i class="fab fa-whatsapp text-green-400"></i></a>
                         </div>
                     </div>
                 </article>
@@ -1185,7 +1186,7 @@
 
             <div class="footer-line mt-16"></div>
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 text-sm text-gray-500 font-medium">
-                <span>Selected projects · NEST TEAM PROJECT</span>
+                <span>Selected projects · HM MODZ PROJECT</span>
                 <span class="footer-meta"><span id="api-status" class="api-status" aria-live="polite">API: menghubungkan...</span> <span>Designed & built with curiosity.</span></span>
             </div>
         </section>
@@ -1277,7 +1278,7 @@
         document.addEventListener("DOMContentLoaded", () => {
             setupInteractions();
             document.body.classList.add("page-ready");
-            const revealItems = document.querySelectorAll(".tab-content, .project-card, .tech-card, .journey-card");
+            const revealItems = document.querySelectorAll(".tab-content, .project-card, .tech-card");
             if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
                 const observer = new IntersectionObserver(entries => {
                     entries.forEach(entry => {
@@ -1293,7 +1294,7 @@
         });
 
         function setupScrollSpy() {
-            const sections = ["home", "journey", "projects", "tech"].map(id => document.getElementById(id)).filter(Boolean);
+            const sections = ["home", "projects", "tech"].map(id => document.getElementById(id)).filter(Boolean);
             if (!("IntersectionObserver" in window)) return;
             const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
